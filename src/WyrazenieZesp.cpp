@@ -1,10 +1,4 @@
 #include "WyrazenieZesp.hh"
-
-
-/*
- * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
- * w pliku naglowkowym.
- */
 std::ostream&  operator << (std::ostream& cout,  Operator op){
     switch(op){
         case Operator::Op_Dodaj:    return cout << " + "; 
@@ -60,7 +54,6 @@ double FindDoubleFromString(std::string text, int *index){
     std::cout << "RAW: " << rawNumber << std::endl;
     return std::stod(rawNumber);
 }
-
 std::istream&  operator >> (std::istream &cin, Expression &exp){
     std::string input;
     cin >> input;
@@ -76,7 +69,27 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
     exp.Arg2.im = FindDoubleFromString(input, &i);
     return cin;
 }
-
 void Display(Expression WyrZ){
     std::cout << WyrZ.Arg1 << WyrZ.Op << WyrZ.Arg2 << " = "<< std::endl;
+}
+Complex Calculate(Expression exp){
+    Complex comp;
+    switch(exp.Op){
+        case Operator::Op_Dodaj:
+            comp = exp.Arg1 + exp.Arg2;
+            break;
+        case Operator::Op_Odejmij:
+            comp = exp.Arg1 - exp.Arg2;
+            break;
+        case  Operator::Op_Mnoz:
+            comp = exp.Arg1 * exp.Arg2;
+            break;
+        case Operator::Op_Dziel:
+            comp = exp.Arg1 / exp.Arg2;
+            break;
+        default:
+            std::cerr << "Nie znaleziono operatora" << std::endl;
+            break;
+    }
+    return comp;
 }
