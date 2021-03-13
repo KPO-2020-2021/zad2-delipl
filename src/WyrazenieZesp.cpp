@@ -1,4 +1,16 @@
 #include "WyrazenieZesp.hh"
+ComplexOrDouble::ComplexOrDouble(){}
+ComplexOrDouble::ComplexOrDouble(double x, double y){
+    if(y == 0){
+        number = x;
+        type = Types::t_double;
+    }
+    else{
+        comp.re = x;
+        comp.im = y;
+        type = Types::t_complex;
+    }
+}
 std::ostream&  operator << (std::ostream& cout,  Operator op){
     switch(op){
         case Operator::Op_Dodaj:    return cout << " + "; 
@@ -72,8 +84,11 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
     exp.Arg2.comp.im = FindDoubleFromString(input, &i);
     return cin;
 }
-void Display(Expression WyrZ){
-    std::cout << WyrZ.Arg1 << WyrZ.Op << WyrZ.Arg2.comp << " = "<< std::endl;
+void Display(Expression exp){
+    if(exp.Arg2.type == Types::t_complex)
+        std::cout << exp.Arg1 << exp.Op << exp.Arg2.comp << " = "<< std::endl;
+    else
+        std::cout << exp.Arg1 << exp.Op << std::noshowpos << exp.Arg2.number << " = "<< std::endl;
 }
 void WriteComplex(Complex &comp){
     std::cin >> comp;
@@ -88,13 +103,13 @@ Complex CalculateExpression(Expression exp){
             comp = exp.Arg1 - exp.Arg2.comp;
             break;
         case  Operator::Op_Mnoz:
-            if(exp.Arg2.type == exp.Arg2.type::t_complex)
+            if(exp.Arg2.type == Types::t_complex)
                 comp = exp.Arg1 * exp.Arg2.comp;
             else
                 comp = exp.Arg1 * exp.Arg2.number;
             break;
         case Operator::Op_Dziel:
-            if(exp.Arg2.type == exp.Arg2.type::t_complex)
+            if(exp.Arg2.type == Types::t_complex)
                 comp = exp.Arg1 / exp.Arg2.comp;
             else
                 comp = exp.Arg1 / exp.Arg2.number;

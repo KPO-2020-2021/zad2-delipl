@@ -12,17 +12,21 @@
 enum Operator { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel };
 /**
  * @brief 
- * Union for the second argument in expresion to recognize if it is a double or complex number
+ * Enum to recognize type of union
+ */
+enum Types{ t_double, t_complex };
+/**
+ * @brief 
+ * Class for second argument in Expression which includes complex number or double number
  */
 struct ComplexOrDouble{
-  typedef enum types{
-    t_double,
-    t_complex
-  } type;
-  union{
-    Complex comp;
-    double number;
-  };
+    Types type;
+    union{
+      Complex comp;
+      double number;
+    };
+    ComplexOrDouble();
+    ComplexOrDouble(double x, double y);
 };
 /**
  * @brief 
@@ -95,7 +99,7 @@ void WriteComplex(Complex &comp);
 Complex CalculateExpression(Expression  exp);
 /**
  * @brief 
- * Function fills Agr1, op and Arg2 with 0 and add operator
+ * Function fills Agr1, Arg2 with 0 and add select an operator to add
  * @return returns expresion (0+0i)+(0+0i) 
  */
 Expression MakeEmptyExpression();
