@@ -68,12 +68,12 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
     i += 2;
     exp.Op = FindOperator(input, &i);
     i++;
-    exp.Arg2.re = FindDoubleFromString(input, &i);
-    exp.Arg2.im = FindDoubleFromString(input, &i);
+    exp.Arg2.comp.re = FindDoubleFromString(input, &i);
+    exp.Arg2.comp.im = FindDoubleFromString(input, &i);
     return cin;
 }
 void Display(Expression WyrZ){
-    std::cout << WyrZ.Arg1 << WyrZ.Op << WyrZ.Arg2 << " = "<< std::endl;
+    std::cout << WyrZ.Arg1 << WyrZ.Op << WyrZ.Arg2.comp << " = "<< std::endl;
 }
 void WriteComplex(Complex &comp){
     std::cin >> comp;
@@ -82,16 +82,22 @@ Complex CalculateExpression(Expression exp){
     Complex comp;
     switch(exp.Op){
         case Operator::Op_Dodaj:
-            comp = exp.Arg1 + exp.Arg2;
+            comp = exp.Arg1 + exp.Arg2.comp;
             break;
         case Operator::Op_Odejmij:
-            comp = exp.Arg1 - exp.Arg2;
+            comp = exp.Arg1 - exp.Arg2.comp;
             break;
         case  Operator::Op_Mnoz:
-            comp = exp.Arg1 * exp.Arg2;
+            if(exp.Arg2.type == exp.Arg2.type::t_complex)
+                comp = exp.Arg1 * exp.Arg2.comp;
+            else
+                comp = exp.Arg1 * exp.Arg2.number;
             break;
         case Operator::Op_Dziel:
-            comp = exp.Arg1 / exp.Arg2;
+            if(exp.Arg2.type == exp.Arg2.type::t_complex)
+                comp = exp.Arg1 / exp.Arg2.comp;
+            else
+                comp = exp.Arg1 / exp.Arg2.number;
             break;
         default:
             std::cerr << "Can't find operator!" << std::endl;
@@ -102,7 +108,7 @@ Complex CalculateExpression(Expression exp){
 Expression MakeEmptyExpression(){
   Expression result;
   result.Arg1 = MakeEmptyComplex();
-  result.Arg2 = MakeEmptyComplex();
+  result.Arg2.comp = MakeEmptyComplex();
   result.Op = Operator::Op_Dodaj;
   return result;
 }

@@ -10,16 +10,28 @@
  * Math operators to choose math calculation 
  */
 enum Operator { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel };
-
-
+/**
+ * @brief 
+ * Union for the second argument in expresion to recognize if it is a double or complex number
+ */
+struct ComplexOrDouble{
+  typedef enum types{
+    t_double,
+    t_complex
+  } type;
+  union{
+    Complex comp;
+    double number;
+  };
+};
 /**
  * @brief 
  * Expression of 2 Complex numbers and math operator
  */
 struct Expression {
-  Complex   Arg1;   
-  Operator    Op;     
-  Complex   Arg2;   
+  Complex           Arg1;   
+  Operator          Op;     
+  ComplexOrDouble   Arg2;   
 };
 /**
  * @brief 
@@ -80,7 +92,6 @@ void WriteComplex(Complex &comp);
  * @param exp - expression to solve
  * @return complex number which is the result of expression
  */
-
 Complex CalculateExpression(Expression  exp);
 /**
  * @brief 

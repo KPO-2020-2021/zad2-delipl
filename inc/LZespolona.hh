@@ -24,6 +24,7 @@ struct  Complex {
 Complex  operator + (Complex  comp1,  Complex  comp2);
 Complex  operator - (Complex  comp1,  Complex  comp2);
 Complex  operator - (Complex  comp1);
+Complex  operator * (Complex  comp,  double number);
 Complex  operator * (Complex  comp1,  Complex  comp2);
 Complex  operator / (Complex  comp1,  double  number);
 Complex  operator / (Complex  comp1,  Complex  comp2);

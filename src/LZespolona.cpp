@@ -28,6 +28,12 @@ Complex  operator - (Complex  comp1){
   result.re = -comp1.re;
   return result;
 }
+Complex  operator * (Complex  comp,  double number){
+  Complex result;
+  result.re = comp.re * number;
+  result.im = comp.im* number;
+  return result;
+}
 Complex  operator * (Complex  comp1,  Complex  comp2){
   Complex result;
   result.re = comp1.re*comp2.re - comp1.im*comp2.im;
