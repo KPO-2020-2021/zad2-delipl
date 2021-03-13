@@ -5,33 +5,71 @@
 /*!
  * Realizuje dodanie dwoch liczb zespolonych.
  * Argumenty:
- *    Skl1 - pierwszy skladnik dodawania,
- *    Skl2 - drugi skladnik dodawania.
+ *    comp1 - pierwszy skladnik dodawania,
+ *    comp2 - drugi skladnik dodawania.
  * Zwraca:
  *    Sume dwoch skladnikow przekazanych jako parametry.
  */
-Complex  operator + (Complex  Skl1,  Complex  Skl2){
+Complex  operator + (Complex  comp1,  Complex  comp2){
   Complex  result;
-
-  result.re = Skl1.re + Skl2.re;
-  result.im = Skl1.im + Skl2.im;
+  result.re = comp1.re + comp2.re;
+  result.im = comp1.im + comp2.im;
   return result;
 }
-Complex  operator - (Complex  Skl1,  Complex  Skl2){
+Complex  operator - (Complex  comp1,  Complex  comp2){
   Complex  result;
-
-  result.re = Skl1.re - Skl2.re;
-  result.im = Skl1.im - Skl2.im;
+  result.re = comp1.re - comp2.re;
+  result.im = comp1.im - comp2.im;
   return result;
 }
-/*cout << Zesp;*/
-std::ostream&  operator << (std::ostream& os,  Complex  Skl){
-  os << "(" << std::noshowpos << Skl.re << std::showpos << Skl.im << "i)";
-  return os;
+Complex  operator - (Complex  comp1){
+  Complex result;
+  result.im = -comp1.im;
+  result.re = -comp1.re;
+  return result;
+}
+Complex  operator * (Complex  comp1,  Complex  comp2){
+  Complex result;
+  result.re = comp1.re*comp2.re - comp1.im*comp2.im;
+  result.im = comp1.re*comp2.im - comp1.im*comp2.re;
+  return result;
+}
+Complex  operator / (Complex  comp,  double  number){
+  Complex result;
+  result.im = comp.im / number;
+  result.re = comp.re / number;
+  return result;
+}
+Complex  operator / (Complex  comp1,  Complex  comp2){
+  Complex result;
+  Complex conjugate2 = comp2;
+  conjugate2.im = -conjugate2.im;
+  double module = comp2.im*comp2.im + comp2.re*comp2.re;
+  result = comp1 * conjugate2;
+  result = result / module;
+  return result;
+}
+bool  operator == (Complex  comp1,  Complex  comp2){
+  return comp1.re == comp2.re && comp1.im == comp2.im? true: false;
+}
+bool  operator != (Complex  comp1,  Complex  comp2){
+  return comp1.re != comp2.re || comp1.im != comp2.im? false: true;
+}
+std::ostream&  operator << (std::ostream& cout,  Complex  comp){
+  cout << "(" << std::noshowpos << comp.re << std::showpos << comp.im << "i)";
+  return cout;
+}
+std::istream&  operator >> (std::istream& cin,  Complex  &comp){
+  std::string input;
+  cin >> input;
+  int i = 0;
+  comp.re = FindDoubleFromString(input, &i);
+  comp.im = FindDoubleFromString(input, &i);
+  return cin;
 }
 Complex MakeEmptyComplex(){
-  Complex com;
-  com.im = 0;
-  com.re = 0;
-  return com;
+  Complex comp;
+  comp.im = 0;
+  comp.re = 0;
+  return comp;
 }

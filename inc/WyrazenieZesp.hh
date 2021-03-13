@@ -1,9 +1,7 @@
 #ifndef WYRAZENIEZESP_HH
 #define WYRAZENIEZESP_HH
-
-
-
 #include "LZespolona.hh"
+#include "header.hh"
 #include "string"
 
 
@@ -14,18 +12,39 @@
 enum Operator { Op_Dodaj, Op_Odejmij, Op_Mnoz, Op_Dziel };
 
 
-
 /**
  * @brief 
  * Expression of 2 Complex numbers and math operator
  */
 struct Expression {
   Complex   Arg1;   
-  Operator     Op;     
+  Operator    Op;     
   Complex   Arg2;   
 };
-
-
+/**
+ * @brief 
+ * Output overload operator for enum: Operator
+ * @param cout Standard output
+ * @param op operator
+ * @return standard output of Operator
+ */
+std::ostream&  operator << (std::ostream& cout,  Operator op);
+/**
+ * @brief 
+ * Input overload operator for enum: Operator
+ * @param cout Standard input
+ * @param op operator
+ * @return standard intput of Operator
+ */
+std::istream&  operator >> (std::istream &cin, Operator &op);
+/**
+ * @brief Looking for math operator
+ * 
+ * @param text one char with operator
+ * @param op Operator to save
+ * @return true when found Operator and false when didn't
+ */
+Operator FindOperator(std::string text, int *index);
 /**
  * @brief 
  * Output overload operator for struct: Expression
@@ -34,14 +53,6 @@ struct Expression {
  * @return standard output of Expression
  */
 std::ostream&  operator << (std::ostream& cout,  Expression exp);
-/**
- * @brief 
- * Output overload operator for enum: Operator
- * @param cout Standard output
- * @param op 
- * @return standard output of Operator
- */
-std::istream&  operator << (std::istream& cout,  Operator &op);
 /**
  * @brief 
  * Input overload operator for struct Expression 
@@ -59,25 +70,22 @@ std::istream&  operator >> (std::istream &cin, Expression &exp);
 void Display(Expression  exp);
 /**
  * @brief 
- * Calculate Expression
+ * Allow to write into complex number
+ * @param comp Writable complex number
+ */
+void WriteComplex(Complex &comp);
+/**
+ * @brief 
+ * CalculateExpression Expression
  * @param exp - expression to solve
  * @return complex number which is the result of expression
  */
-Complex Calculate(Expression  exp);
+
+Complex CalculateExpression(Expression  exp);
 /**
- * @brief Looking for math operator
- * 
- * @param text one char with operator
- * @param op Operator to save
- * @return true when found Operator and false when didn't
+ * @brief 
+ * Function fills Agr1, op and Arg2 with 0 and add operator
+ * @return returns expresion (0+0i)+(0+0i) 
  */
-bool FindOperator(std::string text, Operator *op);
-/**
- * @brief Looking for double number from string
- * 
- * @param text input text to search
- * @param index first index to start search
- * @return found double number or 0.0 if didn't find
- */
-double FindDoubleFromString(std::string text, int index);
+Expression MakeEmptyExpression();
 #endif

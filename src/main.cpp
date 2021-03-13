@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BazaTestu.hh"
+#define ATTEMPT_NUMBER 3
 
 using namespace std;
 
@@ -32,13 +33,25 @@ int main(int argc, char **argv)
   cout << endl;
 
   Expression   quizQuestion;
-  cin   >>  quizQuestion;
-  Display(quizQuestion);
+
   
   while (PobierzNastpnePytanie(&BazaT,&quizQuestion)) {
     cout << ":? Podaj wynik operacji: ";
-    //cout << WyrZ_PytanieTestowe.Arg1.re << endl;
     Display(quizQuestion);
+    cout << "Twoja Odpowiedz: ";
+    Complex answer; 
+    WriteComplex(answer);
+    Complex correctAnswer =  CalculateExpression(quizQuestion);
+    for(int j = 0; j < ATTEMPT_NUMBER; j ++){
+      if(answer == correctAnswer){
+        cout << ":) Odpowiedz poprawna" << endl;
+        break;
+      }
+      else{
+        cout << ":( Blad. Prawidlowym wynikiem jest: " << correctAnswer << endl;
+        break;
+      }
+    }
   }
 
   

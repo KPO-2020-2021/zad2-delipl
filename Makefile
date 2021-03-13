@@ -6,9 +6,9 @@ FLAGS= -Wall -pedantic -std=c++14 -iquote inc
 __start__: ${TRGDIR}/test_arytm_zesp
 	${TRGDIR}/test_arytm_zesp  latwy
 
-${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/LZespolona.o\
+${TRGDIR}/test_arytm_zesp: ${OBJ} ${OBJ}/main.o ${OBJ}/header.o ${OBJ}/LZespolona.o\
                      ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o ${OBJ}/BazaTestu.o
-	g++ -o ${TRGDIR}/test_arytm_zesp ${OBJ}/main.o ${OBJ}/LZespolona.o\
+	g++ -o ${TRGDIR}/test_arytm_zesp ${OBJ}/main.o ${OBJ}/header.o ${OBJ}/LZespolona.o\
                      ${OBJ}/WyrazenieZesp.o ${OBJ}/BazaTestu.o
 
 ${OBJ}:
@@ -17,7 +17,10 @@ ${OBJ}:
 ${OBJ}/main.o: src/main.cpp inc/LZespolona.hh inc/BazaTestu.hh
 	g++ -c ${FLAGS} -o ${OBJ}/main.o src/main.cpp
 
-${OBJ}/LZespolona.o: src/LZespolona.cpp inc/LZespolona.hh
+${OBJ}/header.o: src/header.cpp
+	g++ -c ${FLAGS} -o ${OBJ}/header.o src/header.cpp
+
+${OBJ}/LZespolona.o: src/LZespolona.cpp inc/LZespolona.hh 
 	g++ -c ${FLAGS} -o ${OBJ}/LZespolona.o src/LZespolona.cpp
 
 ${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
@@ -25,7 +28,7 @@ ${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
 	g++ -c ${FLAGS} -o ${OBJ}/BazaTestu.o src/BazaTestu.cpp
 
 ${OBJ}/WyrazenieZesp.o: src/WyrazenieZesp.cpp inc/WyrazenieZesp.hh\
-                       inc/LZespolona.hh
+                       inc/LZespolona.hh inc/header.hh
 	g++ -c ${FLAGS} -o ${OBJ}/WyrazenieZesp.o src/WyrazenieZesp.cpp
 
 ${OBJ}/BazaTestu.o: src/BazaTestu.cpp inc/BazaTestu.hh inc/WyrazenieZesp.hh\
