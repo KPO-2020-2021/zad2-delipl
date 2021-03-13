@@ -6,8 +6,8 @@ double FindDoubleFromString(std::string text, int *index){
     int i = 0;
     for(i = *index; i < (int)text.length(); i++){
         if(i == (int)text.length() -1){
-            std::cerr << "Can't find a double number!" << std::endl;
-            return 0.0;
+            throw std::invalid_argument("In double FindDoubleFromString(std::string text, int *index) Can't find a double number!");
+            return 0;
         }
         else if(!start && (text[i] == '(' || text[i] == '+' || text[i] == '-')){
             start = i;
@@ -24,8 +24,8 @@ double FindDoubleFromString(std::string text, int *index){
         rawNumber += text[i];
     *index = i;
     if(rawNumber.length() < 1){
-        std::cerr << "Can't find a double number!" << std::endl;
-        return -1;
+        throw std::invalid_argument("In double FindDoubleFromString(std::string text, int *index) Can't find a double number!");
+        return 0;
     }
     return std::stod(rawNumber);
 }

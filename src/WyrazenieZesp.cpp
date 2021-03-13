@@ -13,12 +13,12 @@ ComplexOrDouble::ComplexOrDouble(double x, double y){
 }
 std::ostream&  operator << (std::ostream& cout,  Operator op){
     switch(op){
-        case Operator::Op_Dodaj:    return cout << " + "; 
-        case Operator::Op_Odejmij:  return cout << " - "; 
-        case Operator::Op_Mnoz:     return cout << " * "; 
-        case Operator::Op_Dziel:    return cout << " / "; 
+        case Operator::Op_Dodaj:    return cout << "+"; 
+        case Operator::Op_Odejmij:  return cout << "-"; 
+        case Operator::Op_Mnoz:     return cout << "*"; 
+        case Operator::Op_Dziel:    return cout << "/"; 
         default: 
-            std::cerr << "Can't find an operator!" << std::endl;
+            throw "In std::ostream&  operator << (std::ostream& cout,  Operator op) Can't find an operator!";
             return cout;
     }
 }
@@ -39,7 +39,7 @@ std::istream&  operator >> (std::istream &cin, Operator &op){
             op = Operator::Op_Dziel;
             break;
         default:
-            std::cerr << "Can't find an operator!" << std::endl;
+            throw "In std::istream&  operator >> (std::istream &cin, Operator &op) Can't find an operator!";
             op = Operator::Op_Dodaj;
             break;
     }
@@ -60,7 +60,7 @@ Operator FindOperator(std::string text, int *index){
             return Operator::Op_Dziel;
             break;
         default:
-            std::cerr << "Can't find an operator!" << std::endl;
+            throw "In Operator FindOperator(std::string text, int *index) Can't find an operator!";
             return Operator::Op_Dodaj;
             break;
     }
@@ -69,19 +69,25 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
     std::string input;
     cin >> input;
     if(input.compare(0,1,"(") || input.compare(input.length()-1,1,")") ){
-        std::cerr << "Wrong Expression input!" << std::endl;
+        throw "In std::istream&  operator >> (std::istream &cin, Expression &exp) Wrong Expression input!";
         exp = MakeEmptyExpression();
-        return cin;
     }
-    std::string rawNumber;
     int i = 0;
-    exp.Arg1.re = FindDoubleFromString(input, &i);
+    std::string rawNumber;
+    try{
+        exp.Arg1.re = FindDoubleFromString(input, &i);
+    }
+    catch(const std::invalid_argument &e){
+        std::cerr << e.what() << std::endl;
+        throw;
+    }
     exp.Arg1.im = FindDoubleFromString(input, &i);
     i += 2;
     exp.Op = FindOperator(input, &i);
     i++;
     exp.Arg2.comp.re = FindDoubleFromString(input, &i);
     exp.Arg2.comp.im = FindDoubleFromString(input, &i);
+        
     return cin;
 }
 void Display(Expression exp){
@@ -115,7 +121,7 @@ Complex CalculateExpression(Expression exp){
                 comp = exp.Arg1 / exp.Arg2.number;
             break;
         default:
-            std::cerr << "Can't find operator!" << std::endl;
+            throw "In Complex CalculateExpression(Expression exp) Can't find operator!";
             break;
     }
     return comp;

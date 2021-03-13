@@ -1,15 +1,4 @@
 #include "LZespolona.hh"
-
-
-
-/*!
- * Realizuje dodanie dwoch liczb zespolonych.
- * Argumenty:
- *    comp1 - pierwszy skladnik dodawania,
- *    comp2 - drugi skladnik dodawania.
- * Zwraca:
- *    Sume dwoch skladnikow przekazanych jako parametry.
- */
 Complex  operator + (Complex  comp1,  Complex  comp2){
   Complex  result;
   result.re = comp1.re + comp2.re;
@@ -42,6 +31,7 @@ Complex  operator * (Complex  comp1,  Complex  comp2){
 }
 Complex  operator / (Complex  comp,  double  number){
   Complex result;
+  if(number == 0) throw "In Complex  operator / (Complex  comp,  double  number) You can't divide by 0";
   result.im = comp.im / number;
   result.re = comp.re / number;
   return result;
@@ -51,6 +41,7 @@ Complex  operator / (Complex  comp1,  Complex  comp2){
   Complex conjugate2 = comp2;
   conjugate2.im = -conjugate2.im;
   double module = comp2.im*comp2.im + comp2.re*comp2.re;
+  if(module == 0) throw "In Complex  operator / (Complex  comp,  double  number) You can't divide by 0";
   result = comp1 * conjugate2;
   result = result / module;
   return result;
