@@ -44,11 +44,11 @@ int main(int argc, char **argv)
     Complex correctAnswer =  CalculateExpression(quizQuestion);
     for(int j = 0; j < ATTEMPT_NUMBER; j ++){
       if(answer == correctAnswer){
-        cout << ":) Odpowiedz poprawna" << endl;
+        cout << ":) Odpowiedz poprawna" << endl << endl;
         break;
       }
       else{
-        cout << ":( Blad. Prawidlowym wynikiem jest: " << correctAnswer << endl;
+        cout << ":( Blad. Prawidlowym wynikiem jest: " << correctAnswer << endl << endl;
         break;
       }
     }
