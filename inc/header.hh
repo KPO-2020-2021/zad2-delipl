@@ -2,6 +2,8 @@
 #define HEADER_HH
 
 /*=============TO HEADER===============================*/
+bool isSign(char c);
+bool isDigit(std::string text);
 /**
  * @brief Looking for double number from string
  * 

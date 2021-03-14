@@ -23,6 +23,12 @@ int main(int argc, char **argv){
     cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
     cout << endl;
 
+    /*===TEST====*/
+    Expression temp;
+    cin >> temp;
+    Display(temp);
+    return 0;
+    /*===========*/
     Expression quizQuestion;
 
     while (PobierzNastpnePytanie(&BazaT, &quizQuestion)){

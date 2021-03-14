@@ -33,5 +33,6 @@ bool  operator != (Complex  comp1,  Complex  comp2);
 std::ostream&  operator << (std::ostream& cout,  Complex  comp);
 std::istream&  operator >> (std::istream& cin,  Complex& comp);
 Complex MakeEmptyComplex();
+Complex StringToComplex(std::string input, int *i);
 
 #endif

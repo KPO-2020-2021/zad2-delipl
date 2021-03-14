@@ -75,18 +75,24 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
     int i = 0;
     std::string rawNumber;
     try{
-        exp.Arg1.re = FindDoubleFromString(input, &i);
+        exp.Arg1 = StringToComplex(input, &i);
+        exp.Op = FindOperator(input, &i);
+        i++;
+
+        exp.Arg2.comp = StringToComplex(input, &i);
+        if(exp.Arg2.comp.im == 0){
+            exp.Arg2.type = Types::t_double;
+            exp.Arg2.comp.im = 0;
+            exp.Arg2.number = exp.Arg2.comp.re;
+        }else{
+             exp.Arg2.type = Types::t_complex;
+        }
     }
-    catch(const std::invalid_argument &e){
-        std::cerr << e.what() << std::endl;
-        throw;
+    catch(const char * e){
+        std::cerr << e << std::endl;
+        exp = MakeEmptyExpression();
     }
-    exp.Arg1.im = FindDoubleFromString(input, &i);
-    i += 2;
-    exp.Op = FindOperator(input, &i);
-    i++;
-    exp.Arg2.comp.re = FindDoubleFromString(input, &i);
-    exp.Arg2.comp.im = FindDoubleFromString(input, &i);
+    
         
     return cin;
 }

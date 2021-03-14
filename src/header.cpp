@@ -1,31 +1,53 @@
 #include <string>
 #include <iostream>
+bool isDigit(char c){
+    switch (c){
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+    case '.':
+        return true;
+        break;
+    default:
+        return false;
+        break;
+    }
+}
+bool isSign(char c){
+    return c == '+' || c == '-' ? true: false;
+}
 double FindDoubleFromString(std::string text, int *index){
-    int start = 0;
-    int end = 0;
+    bool began = false;
     int i = 0;
+    std::string rawNumber;
     for(i = *index; i < (int)text.length(); i++){
-        if(i == (int)text.length() -1){
-            throw std::invalid_argument("In double FindDoubleFromString(std::string text, int *index) Can't find a double number!");
-            return 0;
+        if(!began&& (isDigit(text[i]) || isSign(text[i]))) {
+            began = true;
+            rawNumber += text[i];
         }
-        else if(!start && (text[i] == '(' || text[i] == '+' || text[i] == '-')){
-            start = i;
-            if(text[i] == '(' ) start++;
-            i++;
-        } 
-        else if(!end && (text[i] == 'i' || text[i] == '+' || text[i] == '-')){
-            end = i;
+        else if(isSign(text[i])){
             break;
         }
+        else if(began){
+            rawNumber += text[i];
+        }
     }
-    std::string rawNumber;
-    for(i = start; i < end; i++)
-        rawNumber += text[i];
     *index = i;
-    if(rawNumber.length() < 1){
-        throw std::invalid_argument("In double FindDoubleFromString(std::string text, int *index) Can't find a double number!");
+    double result;
+    try{
+        result = std::stod(rawNumber);
+    }
+    catch(...){
+        throw("In double FindDoubleFromString(std::string text, int *index) Can't find a double number!");
         return 0;
     }
-    return std::stod(rawNumber);
+    
+    return result;
 }
