@@ -20,15 +20,18 @@ bool isDigit(char c){
         break;
     }
 }
-bool isSign(char c){
+bool isPosSign(char c){
     return c == '+' || c == '-' ? true: false;
+}
+bool isSign(char c){
+    return isPosSign(c) || c == '*' || c == '/' || c == 'i'? true: false;
 }
 double FindDoubleFromString(std::string text, int *index){
     bool began = false;
     int i = 0;
     std::string rawNumber;
     for(i = *index; i < (int)text.length(); i++){
-        if(!began&& (isDigit(text[i]) || isSign(text[i]))) {
+        if(!began&& (isDigit(text[i]) || isPosSign(text[i]))) {
             began = true;
             rawNumber += text[i];
         }

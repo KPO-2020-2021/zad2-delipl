@@ -24,9 +24,17 @@ int main(int argc, char **argv){
     cout << endl;
 
     /*===TEST====*/
-    Expression temp;
-    cin >> temp;
-    Display(temp);
+    while(true){
+        Expression temp;
+        cin >> temp;
+        Display(temp);
+        cout << CalculateExpression(temp) << endl;
+        // string lol;
+        // cin >> lol;
+        // int i = 0;
+        // Complex x = StringToComplex(lol, &i);
+        // cout << x;
+    }
     return 0;
     /*===========*/
     Expression quizQuestion;

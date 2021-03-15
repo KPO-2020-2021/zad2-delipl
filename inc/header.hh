@@ -3,6 +3,7 @@
 
 /*=============TO HEADER===============================*/
 bool isSign(char c);
+bool isPosSign(char c);
 bool isDigit(std::string text);
 /**
  * @brief Looking for double number from string

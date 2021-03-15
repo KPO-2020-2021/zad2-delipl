@@ -78,7 +78,6 @@ std::istream&  operator >> (std::istream &cin, Expression &exp){
         exp.Arg1 = StringToComplex(input, &i);
         exp.Op = FindOperator(input, &i);
         i++;
-
         exp.Arg2.comp = StringToComplex(input, &i);
         if(exp.Arg2.comp.im == 0){
             exp.Arg2.type = Types::t_double;
@@ -123,8 +122,16 @@ Complex CalculateExpression(Expression exp){
         case Operator::Op_Dziel:
             if(exp.Arg2.type == Types::t_complex)
                 comp = exp.Arg1 / exp.Arg2.comp;
-            else
-                comp = exp.Arg1 / exp.Arg2.number;
+            else{
+                try{
+
+                }
+                catch(std::domain_error &e){
+                    comp = exp.Arg1 / exp.Arg2.number;
+                    std::cerr << "Nie mozna dzielic przez 0" << std::endl;
+                    throw;
+                }   
+            }   
             break;
         default:
             throw "In Complex CalculateExpression(Expression exp) Can't find operator!";
