@@ -22,7 +22,7 @@ struct  Complex {
   double   im;    ///< Pole repezentuje czesc urojona. 
 };
 Complex  operator + (Complex  comp1,  Complex  comp2);
-Complex  operator - (Complex  comp1,  Complex  comp2);
+Complex  operator - (Complex  comp1,  Complex  comp2); 
 Complex  operator - (Complex  comp1);
 Complex  operator * (Complex  comp,  double number);
 Complex  operator * (Complex  comp1,  Complex  comp2);
@@ -30,8 +30,11 @@ Complex  operator / (Complex  comp1,  double  number);
 Complex  operator / (Complex  comp1,  Complex  comp2);
 bool  operator == (Complex  comp1,  Complex  comp2);
 bool  operator != (Complex  comp1,  Complex  comp2);
-std::ostream&  operator << (std::ostream& cout,  Complex  comp);
-std::istream&  operator >> (std::istream& cin,  Complex& comp);
+
+std::ostream& operator << (std::ostream& cout,  Complex  comp);
+
+std::istream& operator >> (std::istream& cin,  Complex& comp);
+
 Complex MakeEmptyComplex();
 Complex StringToComplex(std::string input, int *i);
 

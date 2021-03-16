@@ -5,6 +5,35 @@
 using namespace std;
 
 int main(int argc, char **argv){
+
+
+int x = 5;
+cout << x;
+
+Complex z; // re - double    im - double
+
+cout << z;
+ 
+return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     if (argc < 2){
         cout << endl;
         cout << " Brak opcji okreslajacej rodzaj testu." << endl;
@@ -25,15 +54,22 @@ int main(int argc, char **argv){
 
     /*===TEST====*/
     while(true){
-        Expression temp;
-        cin >> temp;
-        Display(temp);
-        cout << CalculateExpression(temp) << endl;
+        // Expression temp;
+        // cin >> temp;
+        // Display(temp);
+        // cout << CalculateExpression(temp) << endl;
         // string lol;
         // cin >> lol;
         // int i = 0;
-        // Complex x = StringToComplex(lol, &i);
-        // cout << x;
+        try{
+            Complex x;
+            cin >> x;
+            cout << x;
+        }
+        catch(logic_error &e){
+            cerr << e.what() << endl;
+        }
+        
     }
     return 0;
     /*===========*/

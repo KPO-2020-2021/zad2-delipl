@@ -3,7 +3,7 @@
 #include "LZespolona.hh"
 
 TEST_CASE("test LZespolona Suma"){
-    LZespolona x, y, z;
+    Complex x, y, z;
 
     x.re = 1;
     x.im = 1;
@@ -11,7 +11,7 @@ TEST_CASE("test LZespolona Suma"){
     y.re = 1;
     y.im = -3;
 
-    z.re = 2;
+    z.re = 1;
     z.im = -2;
     
     CHECK(x+y == z);

@@ -13,8 +13,8 @@ Complex  operator - (Complex  comp1,  Complex  comp2){
 }
 Complex  operator - (Complex  comp1){
     Complex result;
-    result.im = -comp1.im;
-    result.re = -comp1.re;
+    result.im = 0.0 - comp1.im;
+    result.re = 0.0 - comp1.re;
     return result;
 }
 Complex  operator * (Complex  comp,  double number){
@@ -52,178 +52,68 @@ bool  operator == (Complex  comp1,  Complex  comp2){
 bool  operator != (Complex  comp1,  Complex  comp2){
     return comp1.re != comp2.re || comp1.im != comp2.im? false: true;
 }
-std::ostream&  operator << (std::ostream& cout,  Complex  comp){
+std::ostream&  operator << (std::ostream& cout, const Complex  comp){
     cout << "(" << std::noshowpos << comp.re << std::showpos << comp.im << "i)";
     return cout;
 }
 std::istream&  operator >> (std::istream& cin,  Complex  &comp){
-    std::string input;
-    cin >> input;
-    int length = (int)input.length();
-    int i = 0;
-    try{
-        comp.re = FindDoubleFromString(input, &i);
+    char brac, letter;
+    double x;
+    cin >> brac;
+    if(cin.fail()){
+        throw std::logic_error("Wrong input 1");
     }
-    catch(const char* e){
-        std::cerr << e << std::endl;
-        comp = MakeEmptyComplex();
-        return cin;
+    if(brac != '('){
+        cin.setstate(std::ios::failbit);
+        throw std::logic_error("Wrong input 2");
     }
-    if(input[i-1] == 'i'){
-        comp.im = comp.re;
-        comp.re = 0;
-        return cin;
+    cin >> comp.re;
+    if(cin.fail()){
+        // cin.clear();
+        // cin >> letter;
+        // if(cin.fail())  throw std::logic_error("Wrong input 4");
+        // if(letter == 'i'){
+        //     comp.re = 0;
+        //     comp.im = 1;
+        // } 
+        // else if(letter == '-'){
+        //     cin >> letter;
+        //     if(letter == 'i'){
+        //         comp.re = 0;
+        //         comp.im = -1;
+        //     } 
+        // }
+        // else
+            throw std::logic_error("Wrong input 4");
     }
-    else if(length > 2){
-        if(input[i-2] == 'i' && input[i-1] == ')'){
-            comp.im = comp.re;
-            comp.re = 0;
-            return cin;
-        }
-        else if(input[i-1] == ')'){
-            comp.im = 0;
-            return cin;
-        }
-        else if(i == length){
-            comp.im = 0;
-            return cin;
-        }
+    if(cin.fail()){
+        throw std::logic_error("Wrong input 3");
     }
-    else if(i == length){
-        comp.im = 0;
-        return cin;
+    cin >> comp.im;
+    cin >> letter;
+    if(cin.fail()){
+        throw std::logic_error("Wrong input 4");
     }
-    try{
-        comp.im = FindDoubleFromString(input, &i);
+    if(letter != 'i'){
+        cin.setstate(std::ios::failbit);
+        throw std::logic_error("Wrong input 5");
     }
-    catch(const char* e){
-        if(input[i-1] == 'i'){
-            if(input[i-2] == '-')   comp.im = -1;
-            else                    comp.im = 1;
-            return cin;
-        }
-        else{
-            std::cerr << e << std::endl;
-        }
+    cin >> brac;
+    if(cin.fail()){
+        throw std::logic_error("Wrong input 4");
+    }
+    if(brac != ')'){
+        cin.setstate(std::ios::failbit);
+        throw std::logic_error("Wrong input 6");
     }
     return cin;
-}
+}   
 Complex MakeEmptyComplex(){
     Complex comp;
     comp.im = 0;
     comp.re = 0;
     return comp;
 }
-// Complex StringToComplex(std::string input, int *i){
-//     Complex comp;
-//     int length = (int)input.length();
-//     try{
-//         comp.re = FindDoubleFromString(input, i);
-        
-//     }
-//     catch(const char* e){
-//         std::cerr << "Koncze na: " << input[*i] << " w indexie " << *i << "\n";
-//         if(length > 0){
-//             if(length > 1){
-//                 if(input[*i-1] == '-' && input[*i] == 'i'){
-//                     comp.im = -1;
-//                     comp.re = 0;
-//                     (*i)++;
-//                     return comp;
-//                 }
-//                 else if(input[*i] == 'i'){
-//                     comp.im = 1;
-//                     comp.re = 0;
-//                     (*i)++;
-//                     return comp;
-//                 }
-//             }
-//             else if(input[*i] == 'i'){
-//                 comp.im = 1;
-//                 comp.re = 0;
-//                 (*i)++;
-//                 return comp;
-//             }
-//         }
-//         std::cerr << e << std::endl;
-//         comp = MakeEmptyComplex();
-//         return comp;
-//     }
-    
-//     if(input[*i-1] == 'i'){
-//         comp.im = comp.re;
-//         comp.re = 0;
-//         return comp;
-//     }
-//     else if(length>2){
-//         if(input[*i-2] == 'i' && input[*i-1] == ')'){
-//             comp.im = comp.re;
-//             comp.re = 0;
-//             return comp;
-//         }
-//         else if(input[*i-1] == ')'){
-//             comp.im = 0;
-//             return comp;
-//         }
-//         else if(*i == length){
-//             comp.im = 0;
-//             return comp;
-//         }
-//     }
-//     else if(*i == length){
-//         comp.im = 0;
-//         return comp;
-//     }
-//     try{
-//         comp.im = FindDoubleFromString(input, i);
-//     }
-//     catch(const char* e){
-//         if(input[*i-1] == 'i'){
-//             if(input[*i-2] == '-')   comp.im = -1;
-//             else                    comp.im = 1;
-//             return comp;
-//         }
-//         else{
-//             std::cerr << e << std::endl;
-//         }
-//     }
-//     return comp;
-// }
 Complex StringToComplex(std::string input, int *i){
-    Complex comp;
-    int length = (int)input.length();
-    int start = -1;
-    int end = -1;
-    int op = -1;
-    for(int j = *i; j < length; j++){
-        if(start == -1 && input[j]]== '(') start = j;
-        else if(start > j + 1 && end == -1 && isPosSign(input[j])) op = j;
-        else if(end == -1 && start != -1 input[j]== ')') end = j;
-    }
-    std::string rawText;
-    if(op == -1){
-        for(*i; *i < end; (*i)++){
-            if(*i == end - 1 && input[*i] == 'i'){
-                try{
-                    comp.im = std::stod(rawText);
-                    comp.re = 0;
-                }
-                catch(...){
-                    throw("In double StrignToComplex(std::string input, int *i) Can't find a double number!");
-                    return MakeEmptyComplex();
-                }
-            }
-            else if(*i == end){
-                try{
-                    comp.im = 0;
-                    comp.re = std::stod(rawText);
-                }
-                catch(...){
-                    throw("In double StrignToComplex(std::string input, int *i) Can't find a double number!");
-                    return MakeEmptyComplex();
-                }
-            }
-            rawText += input[*i];
-        }
-    }
+    return MakeEmptyComplex();
 }

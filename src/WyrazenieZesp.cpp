@@ -65,34 +65,7 @@ Operator FindOperator(std::string text, int *index){
             break;
     }
 }
-std::istream&  operator >> (std::istream &cin, Expression &exp){
-    std::string input;
-    cin >> input;
-    if(input.compare(0,1,"(") || input.compare(input.length()-1,1,")") ){
-        throw "In std::istream&  operator >> (std::istream &cin, Expression &exp) Wrong Expression input!";
-        exp = MakeEmptyExpression();
-    }
-    int i = 0;
-    std::string rawNumber;
-    try{
-        exp.Arg1 = StringToComplex(input, &i);
-        exp.Op = FindOperator(input, &i);
-        i++;
-        exp.Arg2.comp = StringToComplex(input, &i);
-        if(exp.Arg2.comp.im == 0){
-            exp.Arg2.type = Types::t_double;
-            exp.Arg2.comp.im = 0;
-            exp.Arg2.number = exp.Arg2.comp.re;
-        }else{
-             exp.Arg2.type = Types::t_complex;
-        }
-    }
-    catch(const char * e){
-        std::cerr << e << std::endl;
-        exp = MakeEmptyExpression();
-    }
-    
-        
+std::istream&  operator >> (std::istream &cin, Expression &exp){         
     return cin;
 }
 void Display(Expression exp){
