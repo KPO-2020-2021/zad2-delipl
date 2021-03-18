@@ -2,35 +2,35 @@
 Complex::Complex(): re{0}, im{0}    {}
 Complex::Complex(double x, double y): re{x}, im{y}  {}
 Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
-Complex Complex::operator+ (Complex const comp){
-    return Complex(re + comp.re, im + comp.im);
+Complex Complex::operator+(Complex const comp){
+    return Complex(re + comp.Re(), im + comp.Im());
 }
-Complex Complex::operator- (Complex const comp){
-    return Complex(re - comp.re, im - comp.im);
+Complex Complex::operator-(Complex const comp){
+    return Complex(re - comp.Re(), im - comp.Im());
 }
-Complex Complex::operator- (){
+Complex Complex::operator-(){
     return Complex(-re , -im);
 }
-Complex Complex::operator* (double const x){
+Complex Complex::operator*(double const x){
     return Complex(x * re, x * im);
 }
-Complex Complex::operator* (Complex const comp){
-    return  Complex(comp.re*comp.re - comp.im*comp.im, 
-                    comp.re*comp.im - comp.im*comp.re);
+Complex Complex::operator*(Complex const comp){
+    return  Complex(comp.Re()*comp.Re() - comp.Im()*comp.Im(), 
+                    comp.Re()*comp.Im() - comp.Im()*comp.Re());
 }
-Complex Complex::operator/ (double const x){
+Complex Complex::operator/(double const x){
     if(x == 0) throw std::domain_error("Can't divide Compelx by 0");
     return Complex(re/x, im/x);
 }
 Complex Complex::operator/(Complex const comp){
-    if(comp.re == 0 && comp.im == 0) throw std::domain_error("Can't divide Compelx by 0");
+    if(comp.Re() == 0 && comp.Im() == 0) throw std::domain_error("Can't divide Compelx by 0");
     return Complex(((*this) * Conjugate(comp))/(Module(comp)*Module(comp)));
 }
-bool  Complex::operator == (Complex const comp){
-    return re == comp.re && im == comp.im? true: false;
+bool    Complex::operator==(const Complex& comp){
+    return re == comp.Re() && im == comp.Im()? true: false;
 }
-bool  Complex::operator != (Complex const comp){
-    return re != comp.re || im != comp.im? false: true;
+bool    Complex::operator!=(const Complex& comp){
+    return re != comp.Re() || im != comp.Im()? false: true;
 }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";
@@ -84,11 +84,9 @@ std::istream& operator>>(std::istream& cin, Complex& z){
 		if (a == 'i')
 		{
 			z.re = 0; z.im = (b == '+' ? 1 : -1);
-
 			cin >> std::ws >> a;
 			if (a != ')')
 				throw std::logic_error("Blednie podana liczba zespolona");
-
 			return cin;
 		}
 	}

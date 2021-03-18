@@ -3,19 +3,10 @@
 #include <iostream>
 #include <cmath>
 #include "header.hh"
-/*!
- *  Plik zawiera definicje struktury LZesplona oraz zapowiedzi
- *  przeciazen operatorow arytmetycznych dzialajacych na tej 
- *  strukturze.
- */
 
-
-/*!
- * Modeluje pojecie liczby zespolonej
- */
 class  Complex {
-    double   re;    ///< Pole repezentuje czesc rzeczywista. 
-    double   im;    ///< Pole repezentuje czesc urojona. 
+    double   re;     
+    double   im;    
 
     public:
     Complex();
@@ -32,8 +23,8 @@ class  Complex {
     Complex operator / (Complex const);
     Complex Module(Complex const);
     Complex Conjugate(Complex const);
-    bool operator == (Complex const);
-    bool operator != (Complex const);
+    bool operator == (const Complex&);
+    bool operator != (const Complex&);
 
     friend std::istream& operator >> (std::istream&,  Complex&);
 };
