@@ -2,4 +2,5 @@ obj/*
 .vscode/*
 test_arytm_zesp
 *.out
+*.o
 # lol
