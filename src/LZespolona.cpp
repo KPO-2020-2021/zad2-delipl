@@ -1,119 +1,148 @@
 #include "LZespolona.hh"
-Complex  operator + (Complex  comp1,  Complex  comp2){
-    Complex  result;
-    result.re = comp1.re + comp2.re;
-    result.im = comp1.im + comp2.im;
-    return result;
+Complex::Complex(): re{0}, im{0}    {}
+Complex::Complex(double x, double y): re{x}, im{y}  {}
+Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
+Complex Complex::operator+ (Complex const comp){
+    return Complex(re + comp.re, im + comp.im);
 }
-Complex  operator - (Complex  comp1,  Complex  comp2){
-    Complex  result;
-    result.re = comp1.re - comp2.re;
-    result.im = comp1.im - comp2.im;
-    return result;
+Complex Complex::operator- (Complex const comp){
+    return Complex(re - comp.re, im - comp.im);
 }
-Complex  operator - (Complex  comp1){
-    Complex result;
-    result.im = 0.0 - comp1.im;
-    result.re = 0.0 - comp1.re;
-    return result;
+Complex Complex::operator- (){
+    return Complex(-re , -im);
 }
-Complex  operator * (Complex  comp,  double number){
-    Complex result;
-    result.re = comp.re * number;
-    result.im = comp.im* number;
-    return result;
+Complex Complex::operator* (double const x){
+    return Complex(x * re, x * im);
 }
-Complex  operator * (Complex  comp1,  Complex  comp2){
-    Complex result;
-    result.re = comp1.re*comp2.re - comp1.im*comp2.im;
-    result.im = comp1.re*comp2.im - comp1.im*comp2.re;
-    return result;
+Complex Complex::operator* (Complex const comp){
+    return  Complex(comp.re*comp.re - comp.im*comp.im, 
+                    comp.re*comp.im - comp.im*comp.re);
 }
-Complex  operator / (Complex  comp,  double  number){
-    Complex result;
-    if(number == 0) throw "In Complex  operator / (Complex  comp,  double  number) You can't divide by 0";
-    result.im = comp.im / number;
-    result.re = comp.re / number;
-    return result;
+Complex Complex::operator/ (double const x){
+    if(x == 0) throw std::domain_error("Can't divide Compelx by 0");
+    return Complex(re/x, im/x);
 }
-Complex  operator / (Complex  comp1,  Complex  comp2){
-    Complex result;
-    Complex conjugate2 = comp2;
-    conjugate2.im = -conjugate2.im;
-    double module = comp2.im*comp2.im + comp2.re*comp2.re;
-    if(module == 0) throw "In Complex  operator / (Complex  comp,  double  number) You can't divide by 0";
-    result = comp1 * conjugate2;
-    result = result / module;
-    return result;
+Complex Complex::operator/(Complex const comp){
+    if(comp.re == 0 && comp.im == 0) throw std::domain_error("Can't divide Compelx by 0");
+    return Complex(((*this) * Conjugate(comp))/(Module(comp)*Module(comp)));
 }
-bool  operator == (Complex  comp1,  Complex  comp2){
-    return comp1.re == comp2.re && comp1.im == comp2.im? true: false;
+bool  Complex::operator == (Complex const comp){
+    return re == comp.re && im == comp.im? true: false;
 }
-bool  operator != (Complex  comp1,  Complex  comp2){
-    return comp1.re != comp2.re || comp1.im != comp2.im? false: true;
+bool  Complex::operator != (Complex const comp){
+    return re != comp.re || im != comp.im? false: true;
 }
-std::ostream&  operator << (std::ostream& cout, const Complex  comp){
-    cout << "(" << std::noshowpos << comp.re << std::showpos << comp.im << "i)";
-    return cout;
+std::ostream& operator<<(std::ostream& cout, const Complex comp){
+	cout << "(";
+	if (!comp.Re() && !comp.Im())
+		cout << 0;
+	else if (!comp.Im())
+		cout << comp.Re();
+	else{
+		if (comp.Re())
+			cout << comp.Re();
+		if (fabs(comp.Im()) == 1){
+			if (comp.Im() > 0){
+				if (comp.Re())
+					cout << "+";
+				else
+					;
+			}
+			else
+				cout << "-";
+		}
+		else{
+			if (comp.Re())
+				cout << std::showpos;
+			else
+				;
+			cout << comp.Im() << std::noshowpos;
+		}
+		cout << "i";
+	}
+	cout << ")";
+	return cout;
 }
-std::istream&  operator >> (std::istream& cin,  Complex  &comp){
-    char brac, letter;
-    double x;
-    cin >> brac;
-    if(cin.fail()){
-        throw std::logic_error("Wrong input 1");
-    }
-    if(brac != '('){
-        cin.setstate(std::ios::failbit);
-        throw std::logic_error("Wrong input 2");
-    }
-    cin >> comp.re;
-    if(cin.fail()){
-        // cin.clear();
-        // cin >> letter;
-        // if(cin.fail())  throw std::logic_error("Wrong input 4");
-        // if(letter == 'i'){
-        //     comp.re = 0;
-        //     comp.im = 1;
-        // } 
-        // else if(letter == '-'){
-        //     cin >> letter;
-        //     if(letter == 'i'){
-        //         comp.re = 0;
-        //         comp.im = -1;
-        //     } 
-        // }
-        // else
-            throw std::logic_error("Wrong input 4");
-    }
-    if(cin.fail()){
-        throw std::logic_error("Wrong input 3");
-    }
-    cin >> comp.im;
-    cin >> letter;
-    if(cin.fail()){
-        throw std::logic_error("Wrong input 4");
-    }
-    if(letter != 'i'){
-        cin.setstate(std::ios::failbit);
-        throw std::logic_error("Wrong input 5");
-    }
-    cin >> brac;
-    if(cin.fail()){
-        throw std::logic_error("Wrong input 4");
-    }
-    if(brac != ')'){
-        cin.setstate(std::ios::failbit);
-        throw std::logic_error("Wrong input 6");
-    }
-    return cin;
-}   
-Complex MakeEmptyComplex(){
-    Complex comp;
-    comp.im = 0;
-    comp.re = 0;
-    return comp;
-}
-Complex StringToComplex(std::string input, int *i){
-    return MakeEmptyComplex();
+std::istream& operator>>(std::istream& cin, Complex& z){
+	std::string temp; char a, b = 'f';
+	cin >> std::ws >> a;
+	if(a != '(')
+		throw std::logic_error("Blednie podana liczba zespolona");
+	cin >> std::ws >> a;
+	if (a == 'i'){
+		z.re = 0; z.im = 1;
+
+		cin >> std::ws >> a;
+		if (a != ')')
+			throw std::logic_error("Blednie podana liczba zespolona");
+
+		return cin;
+	}
+	else if (a == '+' || a == '-'){
+		b = a;
+		cin >> std::ws >> a;
+		if (a == 'i')
+		{
+			z.re = 0; z.im = (b == '+' ? 1 : -1);
+
+			cin >> std::ws >> a;
+			if (a != ')')
+				throw std::logic_error("Blednie podana liczba zespolona");
+
+			return cin;
+		}
+	}
+	cin.putback(a);
+	cin >> z.re;
+	if(cin.fail())
+		throw std::logic_error("Blednie podana liczba zespolona");
+	if (b == '-')
+		z.re *= -1;
+	b = 'f';
+	cin >> std::ws >> a;
+	if (a == ')')
+		return cin;
+	else if (a == 'i'){
+		z.im = z.re;  z.re = 0;
+		cin >> std::ws >> a;
+		if (a != ')')
+			throw std::logic_error("Blednie podana liczba zespolona");
+
+		return cin;
+	}
+	else if (a == '+' || a == '-'){
+		b = a;
+		cin >> std::ws >> a;
+		if (a == 'i')
+		{
+			z.im = (b == '+' ? 1 : -1);
+			cin >> std::ws >> a;
+			if (a != ')')
+				throw std::logic_error("Blednie podana liczba zespolona");
+
+			return cin;
+		}
+		cin.putback(a);
+	}
+	else{
+		throw std::logic_error("Blednie podana liczba zespolona");
+	}
+
+    cin >> z.im;
+	if (cin.fail())
+		throw std::logic_error("Blednie podana liczba zespolona");
+	if (b == '-')
+		z.im *= -1;
+
+	cin >> std::ws >> a;
+	if (a != 'i')
+		throw std::logic_error("Blednie podana liczba zespolona");
+
+
+	cin >> std::ws >> a;
+	if (a != ')')
+		throw std::logic_error("Blednie podana liczba zespolona");
+
+	return cin;
+
 }
