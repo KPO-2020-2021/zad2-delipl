@@ -28,24 +28,24 @@ Complex Complex::operator/(Complex const &comp){
     if(mod == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex( ( (*this) * Conjugate(comp) )/ mod );
 }
-// bool    Complex::operator==(const Complex& comp){
-//     return re == comp.Re() && im == comp.Im()? true: false;
-// }
-// bool    Complex::operator!=(const Complex& comp){
-//     return re != comp.Re() || im != comp.Im()? false: true;
-// }
+bool    Complex::operator==(const Complex& comp){
+    return re == comp.Re() && im == comp.Im()? true: false;
+}
+bool    Complex::operator!=(const Complex& comp){
+    return re != comp.Re() || im != comp.Im()? false: true;
+}
 Complex Complex::Conjugate(const Complex& comp){
     return Complex(comp.Re(), -comp.Im());
 }
 double Complex::Module(const Complex& comp){
     return sqrt(pow(comp.Re(), 2) + pow(comp.Im(), 2));
 }
-bool    operator==(const Complex& comp1,const Complex& comp2){
-    return comp1.Re() == comp2.Re() && comp1.Im() == comp2.Im()? true: false;
-}
-bool    operator!=(const Complex& comp1, const Complex& comp2){
-    return comp1.Re() != comp2.Re() || comp1.Im() != comp2.Im()? false: true;
-}
+// bool    operator==(const Complex& comp1,const Complex& comp2){
+//     return comp1.Re() == comp2.Re() && comp1.Im() == comp2.Im()? true: false;
+// }
+// bool    operator!=(const Complex& comp1, const Complex& comp2){
+//     return comp1.Re() != comp2.Re() || comp1.Im() != comp2.Im()? false: true;
+// }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";
 	if (!comp.Re() && !comp.Im())
