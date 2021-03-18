@@ -1,4 +1,5 @@
 #include "LZespolona.hh"
+#include <cmath>
 Complex::Complex(): re{0}, im{0}    {}
 Complex::Complex(double x, double y): re{x}, im{y}  {}
 Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
@@ -15,22 +16,35 @@ Complex Complex::operator*(double const x){
     return Complex(x * re, x * im);
 }
 Complex Complex::operator*(Complex const comp){
-    return  Complex(comp.Re()*comp.Re() - comp.Im()*comp.Im(), 
-                    comp.Re()*comp.Im() - comp.Im()*comp.Re());
+    return  Complex(re*comp.Re() - im*comp.Im(), 
+                    re*comp.Im() + im*comp.Re());
 }
 Complex Complex::operator/(double const x){
-    if(x == 0) throw std::domain_error("Can't divide Compelx by 0");
+    if(x == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex(re/x, im/x);
 }
-Complex Complex::operator/(Complex const comp){
-    if(comp.Re() == 0 && comp.Im() == 0) throw std::domain_error("Can't divide Compelx by 0");
-    return Complex(((*this) * Conjugate(comp))/(Module(comp)*Module(comp)));
+Complex Complex::operator/(Complex const &comp){
+    double mod = pow(Module(comp), 2);
+    if(mod == 0) throw std::domain_error("Can't divide Complex by 0");
+    return Complex( ( (*this) * Conjugate(comp) )/ mod );
 }
-bool    Complex::operator==(const Complex& comp){
-    return re == comp.Re() && im == comp.Im()? true: false;
+// bool    Complex::operator==(const Complex& comp){
+//     return re == comp.Re() && im == comp.Im()? true: false;
+// }
+// bool    Complex::operator!=(const Complex& comp){
+//     return re != comp.Re() || im != comp.Im()? false: true;
+// }
+Complex Complex::Conjugate(const Complex& comp){
+    return Complex(comp.Re(), -comp.Im());
 }
-bool    Complex::operator!=(const Complex& comp){
-    return re != comp.Re() || im != comp.Im()? false: true;
+double Complex::Module(const Complex& comp){
+    return sqrt(pow(comp.Re(), 2) + pow(comp.Im(), 2));
+}
+bool    operator==(const Complex& comp1,const Complex& comp2){
+    return comp1.Re() == comp2.Re() && comp1.Im() == comp2.Im()? true: false;
+}
+bool    operator!=(const Complex& comp1, const Complex& comp2){
+    return comp1.Re() != comp2.Re() || comp1.Im() != comp2.Im()? false: true;
 }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";
