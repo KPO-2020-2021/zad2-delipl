@@ -32,7 +32,7 @@ ${OBJ}/Statistics.o: ${SRC}/Statistics.cpp inc/Statistics.hpp
 	g++ -c ${FLAGS} -o ${OBJ}/Statistics.o ${SRC}/Statistics.cpp
 
 ${TBIN}/test_0.o: ${TBIN} 
-	g++ -o ${TESTS}/bin/test_1.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test0.cpp 
+	g++ -o ${TESTS}/bin/test_0.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test0.cpp 
 
 ${TBIN}/test_1.o: ${TBIN} ${OBJ}/Complex.o 
 	g++ -o ${TESTS}/bin/test_1.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test1.cpp ${OBJ}/Complex.o
@@ -43,16 +43,19 @@ ${TBIN}/test_2.o: ${TBIN} ${OBJ}/Complex.o ${OBJ}/Expression.o
 ${TBIN}/test_3.o: ${TBIN} ${OBJ}/QuizDataBase.o ${OBJ}/Complex.o ${OBJ}/Expression.o 
 	g++ -o ${TESTS}/bin/test_3.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test3.cpp ${OBJ}/Complex.o ${OBJ}/Expression.o ${OBJ}/QuizDataBase.o 
 
+${TBIN}/test_4.o: ${TBIN} ${OBJ}/Statistics.o
+	g++ -o ${TESTS}/bin/test_4.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test4.cpp
 
 
 ${TBIN}:
 	mkdir ${TBIN}
 
-test: ${TBIN}/test_0.o  ${TBIN}/test_1.o ${TBIN}/test_2.o  ${TBIN}/test_3.o
+test: ${TBIN}/test_0.o  ${TBIN}/test_1.o ${TBIN}/test_2.o  ${TBIN}/test_3.o ${TBIN}/test_4.o
 	${TBIN}/test_0.o 
 	${TBIN}/test_1.o 
 	${TBIN}/test_2.o
 	${TBIN}/test_3.o 
+	${TBIN}/test_4.o
 
 testRound:	${TBIN}/test_0.o 
 	${TBIN}/test_0.o 
@@ -65,6 +68,9 @@ testExpression: ${TBIN}/test_2.o
 
 testQuiz: ${TBIN}/test_3.o
 	${TBIN}/test_3.o
+
+testStats: ${TBIN}/test_4.o
+	${TBIN}/test_4.o
 
 
 run:

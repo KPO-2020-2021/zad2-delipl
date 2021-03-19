@@ -84,6 +84,7 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << ")";
 	return cout;
 }
+
 std::istream& operator>>(std::istream& cin, Complex& comp){
 	std::string temp; char a, b = 'f';
 	cin >> std::ws >> a;
@@ -171,5 +172,5 @@ std::istream& operator>>(std::istream& cin, Complex& comp){
 		throw std::logic_error("Blednie podana liczba zespolona");
 
 	return cin;
-
 }
+

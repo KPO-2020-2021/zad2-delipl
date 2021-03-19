@@ -1,26 +1,30 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "./doctest/doctest.h"
-#include "QuizDataBase.hh"
+#include "QuizDataBase.hpp"
 TEST_CASE("1. Init Quiz latwe"){
     Quiz q("latwy");
     CHECK(1==1);
 }
-TEST_CASE("2. Size"){
+TEST_CASE("2. Quiz Size"){
     Quiz q("latwy");
-    std::cout << "Size: "<< q.size() << std::endl;
-    CHECK(1==1);
+    CHECK(q.size()==5);
 }
-TEST_CASE("3. Print questions"){
-    Quiz q("latwy");
+void foo(Quiz &q){
     for(unsigned int i = 0; i < q.size(); i++){
         std::cout << q[i] << std::endl;
     }
-    CHECK(1==1);
 }
-TEST_CASE("3. Print questions and calculate"){
+TEST_CASE("3. Print questions"){
     Quiz q("latwy");
+    CHECK_NOTHROW(foo(q));
+}
+void goo(Quiz &q){
     for(unsigned int i = 0; i < q.size(); i++){
         std::cout << q[i] << " = " << q[i].Calculate() << std::endl;
     }
-    CHECK(1==1);
+}
+TEST_CASE("4. Print questions and calculate"){
+    Quiz q("latwy");
+    CHECK_NOTHROW(goo(q));
+    
 }

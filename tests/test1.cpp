@@ -72,3 +72,75 @@ TEST_CASE("11. test Complex Multiplar by scalar"){
     CHECK(x*y == z);
 }
 
+TEST_CASE("12. test Complex input operator (2-6i)"){
+    // oczekiwany wynik
+    std::string expected = "(2-6i)";
+    // buffor do zapisu strumienia
+    std::stringstream buffer;
+    // nie czaje tego, jakieś przekierowanie
+    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
+
+    // konstruktor LZesp
+    Complex x(2, -6);
+    std::cout << x;
+
+    // zmiana bufora na string 
+    std::string text = buffer.str();
+    // dziwna rzecz bez tego jest segm
+    std::cout.rdbuf(prevcoutbuf);
+    CHECK(text == expected);
+}
+TEST_CASE("13. test Complex input operator (-6i)"){
+    // oczekiwany wynik
+    std::string expected = "(-6i)";
+    // buffor do zapisu strumienia
+    std::stringstream buffer;
+    // nie czaje tego, jakieś przekierowanie
+    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
+
+    // konstruktor LZesp
+    Complex x(0, -6);
+    std::cout << x;
+
+    // zmiana bufora na string 
+    std::string text = buffer.str();
+    // dziwna rzecz bez tego jest segm
+    std::cout.rdbuf(prevcoutbuf);
+    CHECK(text == expected);
+}
+TEST_CASE("14. test Complex input operator (-i)"){
+    // oczekiwany wynik
+    std::string expected = "(-i)";
+    // buffor do zapisu strumienia
+    std::stringstream buffer;
+    // nie czaje tego, jakieś przekierowanie
+    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
+
+    // konstruktor LZesp
+    Complex x(0, -1);
+    std::cout << x;
+
+    // zmiana bufora na string 
+    std::string text = buffer.str();
+    // dziwna rzecz bez tego jest segm
+    std::cout.rdbuf(prevcoutbuf);
+    CHECK(text == expected);
+}
+// TEST_CASE("15. test Complex input operator (2+0i), should be error"){
+//     // oczekiwany wynik
+//     Complex y(0, -1);
+//     // buffor do zapisu strumienia
+//     std::stringstream buffer;
+//     // nie czaje tego, jakieś przekierowanie
+//     std::streambuf* prevcoutbuf = std::cin.rdbuf(buffer.rdbuf());
+
+//     // konstruktor LZesp
+//     std::string input = "(i)";
+//     std::cin >> input;
+
+//     // zmiana bufora na string 
+//     std::string text = buffer.str();
+//     // dziwna rzecz bez tego jest segm
+//     std::cout.rdbuf(prevcoutbuf);
+//     CHECK(text == expected);
+// }
