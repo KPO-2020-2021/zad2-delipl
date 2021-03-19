@@ -69,6 +69,8 @@ testQuiz: ${TBIN}/test_3.o
 
 run:
 	${TRGDIR}/test_arytm_zesp latwy
+runTrudny:
+	${TRGDIR}/test_arytm_zesp trudny
 
 clean:
 	rm -f ${TRGDIR}/test_arytm_zesp ${OBJ}/* ${TBIN}/*
