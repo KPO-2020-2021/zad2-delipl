@@ -3,4 +3,6 @@ obj/*
 test_arytm_zesp
 *.out
 *.o
+*.
 # lol
+workspace.code-workspace

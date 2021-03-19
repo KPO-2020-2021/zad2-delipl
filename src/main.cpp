@@ -1,115 +1,72 @@
 #include <iostream>
-#include "BazaTestu.hh"
-#define ATTEMPT_NUMBER 3
+#include <limits>
+#include "QuizDataBase.hpp"
+#include "Statistics.hpp"
 
 using namespace std;
 
 int main(int argc, char **argv){
-
-
-int x = 5;
-cout << x;
-
-Complex z; // re - double    im - double
-
-cout << z;
- 
-return 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if (argc < 2){
+    if (argc < 2) {
         cout << endl;
         cout << " Brak opcji okreslajacej rodzaj testu." << endl;
         cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
         cout << endl;
         return 1;
     }
+    try{
+        Quiz   quiz(argv[1]);
+        Statistics stats;
+        Complex answer, correctAnswer;
+        int attempt = 0;
 
-    BazaTestu BazaT = {nullptr, 0, 0};
-
-    if (InicjalizujTest(&BazaT, argv[1]) == false){
-        cerr << " Inicjalizacja testu nie powiodla sie." << endl;
-        return 1;
-    }
-    cout << endl;
-    cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
-    cout << endl;
-
-    /*===TEST====*/
-    while(true){
-        // Expression temp;
-        // cin >> temp;
-        // Display(temp);
-        // cout << CalculateExpression(temp) << endl;
-        // string lol;
-        // cin >> lol;
-        // int i = 0;
-        try{
-            Complex x;
-            cin >> x;
-            cout << x;
-        }
-        catch(logic_error &e){
-            cerr << e.what() << endl;
-        }
-        
-    }
-    return 0;
-    /*===========*/
-    Expression quizQuestion;
-
-    while (PobierzNastpnePytanie(&BazaT, &quizQuestion)){
-        cout << ":? Podaj wynik operacji: ";
-        Display(quizQuestion);
-
-        Complex answer;
-        Complex correctAnswer = CalculateExpression(quizQuestion);
-        for (int j = 0; j < ATTEMPT_NUMBER; j++){
-            cout << "   Twoja Odpowiedz: ";
+        for (unsigned int i = 0; i < quiz.size(); i++){
             try{
-                WriteComplex(answer);
+                correctAnswer = quiz[i].Calculate();
+
+                if(!attempt)
+                    cout << "Podaj wynik operacji: " << quiz[i] << " = " << endl;
+                cout << "Twoja odpowiedz(proba " << attempt + 1 << " z 3): ";
+
+                cin >> answer;
+                attempt = 0;
+
                 if (answer == correctAnswer){
-                    cout << ":) Odpowiedz poprawna" << endl
-                         << endl;
-                    break;
+                    cout << "Odpowiedz poprawna" << endl << endl;
+                    stats++;
                 }
                 else{
-                    cout << ":( Blad. Prawidlowym wynikiem jest: " << correctAnswer << endl
-                         << endl;
-                    break;
+                    cout << "Blad. Prawidlowym wynikiem jest: " << correctAnswer << endl << endl;
+                    stats--;
                 }
+
+            }
+            catch (std::logic_error& e){
+                if (attempt < 2){
+                    i--; attempt++;
+                    cerr << endl << "Blad zapisu liczby zespolonej. Sprobuj jeszcze raz." << endl << endl;
+                }
+                else{
+                    stats--; attempt = 0;
+                    cerr << endl << "Blad zapisu liczby zespolonej. Prawidlowym wynikiem jest: " << correctAnswer << endl << endl;
+                }
+                cin.clear();
+                cin.ignore(numeric_limits<int>::max(), '\n');
             }
             catch (...){
-                if (j == ATTEMPT_NUMBER - 1)
-                    cerr << endl
-                         << "\nBlad zapisu liczby zespolonej. Przechodzisz do nastepnego pytania." << endl
-                         << endl;
-                else
-                    cerr << endl
-                         << "\nBlad zapisu liczby zespolonej. Sprobuj jeszcze raz." << endl
-                         << endl;
+                throw;
             }
         }
+        cout << "Koniec testu!" << endl << stats;
+    }
+    catch (std::logic_error& e){
+        cerr << e.what() << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        return 2;
+    }
+    catch (...){
+        cerr << "Unknown error" << endl;
     }
 
-    cout << endl;
-    cout << " Koniec testu." << endl;
-    cout << endl;
+    return 0;
 }

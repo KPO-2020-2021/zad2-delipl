@@ -1,51 +1,62 @@
-#include "LZespolona.hh"
+#include "Complex.hpp"
 #include <cmath>
-Complex::Complex(): re{0}, im{0}    {}
-Complex::Complex(double x, double y): re{x}, im{y}  {}
+Complex::Complex(): re{0}, im{0}   {}
+Complex::Complex(double x, double y): re{x}, im{y}{ 
+    re = (int)(re * pow(MIN_DIFF, -1));
+    re = x* pow(MIN_DIFF, -1);
+    re = round(re);
+    re = re * MIN_DIFF;
+
+    im = (int)(im * pow(MIN_DIFF, -1));
+    im = y* pow(MIN_DIFF, -1);
+    im = round(im);
+    im = im * MIN_DIFF;
+}
 Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
-Complex Complex::operator+(Complex const comp){
+Complex Complex::operator+(const Complex &comp) const{
     return Complex(re + comp.Re(), im + comp.Im());
 }
-Complex Complex::operator-(Complex const comp){
+Complex Complex::operator-(const Complex &comp) const{
     return Complex(re - comp.Re(), im - comp.Im());
 }
 Complex Complex::operator-(){
     return Complex(-re , -im);
 }
-Complex Complex::operator*(double const x){
+Complex Complex::operator*(double const &x) const{
     return Complex(x * re, x * im);
 }
-Complex Complex::operator*(Complex const comp){
-    return  Complex(re*comp.Re() - im*comp.Im(), 
-                    re*comp.Im() + im*comp.Re());
+Complex Complex::operator*(const Complex &comp) const{
+    
+    double  x = re*comp.Re() - im*comp.Im();
+    double  y = re*comp.Im() + im*comp.Re();
+    return  Complex(x,y);      
 }
-Complex Complex::operator/(double const x){
+Complex Complex::operator/(const double &x) const{
     if(x == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex(re/x, im/x);
 }
-Complex Complex::operator/(Complex const &comp){
+Complex Complex::operator/(const Complex &comp) const{
     double mod = pow(Module(comp), 2);
     if(mod == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex( ( (*this) * Conjugate(comp) )/ mod );
 }
-bool    Complex::operator==(const Complex& comp){
-    return re == comp.Re() && im == comp.Im()? true: false;
+bool Complex::operator==(const Complex &comp) const{
+    return fabs(re - comp.Re()) < MIN_DIFF && fabs(im - comp.Im()) < MIN_DIFF;
+    // return re == comp.Re() && im == comp.Im();
 }
-bool    Complex::operator!=(const Complex& comp){
-    return re != comp.Re() || im != comp.Im()? false: true;
+bool Complex::operator!=(const Complex &comp) const{
+    return fabs(re - comp.Re()) > MIN_DIFF || fabs(im - comp.Im()) > MIN_DIFF;
+    // return re != comp.Re() || im != comp.Im();
 }
-Complex Complex::Conjugate(const Complex& comp){
+bool Complex::operator!() const{
+    return (*this) == Complex(0, 0);
+}
+Complex Complex::Conjugate(const Complex &comp) const{
     return Complex(comp.Re(), -comp.Im());
 }
-double Complex::Module(const Complex& comp){
+double Complex::Module(const Complex &comp) const{
     return sqrt(pow(comp.Re(), 2) + pow(comp.Im(), 2));
 }
-// bool    operator==(const Complex& comp1,const Complex& comp2){
-//     return comp1.Re() == comp2.Re() && comp1.Im() == comp2.Im()? true: false;
-// }
-// bool    operator!=(const Complex& comp1, const Complex& comp2){
-//     return comp1.Re() != comp2.Re() || comp1.Im() != comp2.Im()? false: true;
-// }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";
 	if (!comp.Re() && !comp.Im())
@@ -59,8 +70,6 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 			if (comp.Im() > 0){
 				if (comp.Re())
 					cout << "+";
-				else
-					;
 			}
 			else
 				cout << "-";
@@ -68,8 +77,6 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 		else{
 			if (comp.Re())
 				cout << std::showpos;
-			else
-				;
 			cout << comp.Im() << std::noshowpos;
 		}
 		cout << "i";
@@ -77,14 +84,14 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << ")";
 	return cout;
 }
-std::istream& operator>>(std::istream& cin, Complex& z){
+std::istream& operator>>(std::istream& cin, Complex& comp){
 	std::string temp; char a, b = 'f';
 	cin >> std::ws >> a;
 	if(a != '(')
 		throw std::logic_error("Blednie podana liczba zespolona");
 	cin >> std::ws >> a;
-	if (a == 'i'){
-		z.re = 0; z.im = 1;
+	if (a == 'i'){  //(i)
+		comp.re = 0; comp.im = 1;
 
 		cin >> std::ws >> a;
 		if (a != ')')
@@ -95,9 +102,9 @@ std::istream& operator>>(std::istream& cin, Complex& z){
 	else if (a == '+' || a == '-'){
 		b = a;
 		cin >> std::ws >> a;
-		if (a == 'i')
+		if (a == 'i') //(+i) (-i)
 		{
-			z.re = 0; z.im = (b == '+' ? 1 : -1);
+			comp.re = 0; comp.im = (b == '+' ? 1 : -1);
 			cin >> std::ws >> a;
 			if (a != ')')
 				throw std::logic_error("Blednie podana liczba zespolona");
@@ -105,17 +112,22 @@ std::istream& operator>>(std::istream& cin, Complex& z){
 		}
 	}
 	cin.putback(a);
-	cin >> z.re;
+	cin >> comp.re;
 	if(cin.fail())
 		throw std::logic_error("Blednie podana liczba zespolona");
+    if(comp.re < MIN_DIFF){
+        comp.re = comp.re < MIN_DIFF/2? 0.0: MIN_DIFF;
+    }
 	if (b == '-')
-		z.re *= -1;
+		comp.re *= -1;
+    
+    
 	b = 'f';
 	cin >> std::ws >> a;
 	if (a == ')')
 		return cin;
 	else if (a == 'i'){
-		z.im = z.re;  z.re = 0;
+		comp.im = comp.re;  comp.re = 0;
 		cin >> std::ws >> a;
 		if (a != ')')
 			throw std::logic_error("Blednie podana liczba zespolona");
@@ -127,7 +139,7 @@ std::istream& operator>>(std::istream& cin, Complex& z){
 		cin >> std::ws >> a;
 		if (a == 'i')
 		{
-			z.im = (b == '+' ? 1 : -1);
+			comp.im = (b == '+' ? 1 : -1);
 			cin >> std::ws >> a;
 			if (a != ')')
 				throw std::logic_error("Blednie podana liczba zespolona");
@@ -140,11 +152,14 @@ std::istream& operator>>(std::istream& cin, Complex& z){
 		throw std::logic_error("Blednie podana liczba zespolona");
 	}
 
-    cin >> z.im;
+    cin >> comp.im;
 	if (cin.fail())
 		throw std::logic_error("Blednie podana liczba zespolona");
+    if(comp.im < MIN_DIFF){
+        comp.im = comp.im < MIN_DIFF/2? 0.0: MIN_DIFF;
+    }
 	if (b == '-')
-		z.im *= -1;
+		comp.im *= -1;
 
 	cin >> std::ws >> a;
 	if (a != 'i')
