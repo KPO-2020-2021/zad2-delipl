@@ -14,39 +14,36 @@ Complex::Complex(double x, double y): re{x}, im{y}{
 }
 Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
 Complex Complex::operator+(const Complex &comp) const{
-    return Complex(re + comp.Re(), im + comp.Im());
+    return Complex(this->re + comp.Re(), this->im + comp.Im());
 }
 Complex Complex::operator-(const Complex &comp) const{
-    return Complex(re - comp.Re(), im - comp.Im());
+    return Complex(this->re - comp.Re(), this->im - comp.Im());
 }
 Complex Complex::operator-(){
-    return Complex(-re , -im);
+    return Complex(-this->re , -this->im);
 }
 Complex Complex::operator*(double const &x) const{
-    return Complex(x * re, x * im);
+    return Complex(x * this->re, x * this->im);
 }
-Complex Complex::operator*(const Complex &comp) const{
-    
-    double  x = re*comp.Re() - im*comp.Im();
-    double  y = re*comp.Im() + im*comp.Re();
+Complex Complex::operator*(const Complex &comp) const{  
+    double  x = this->re*comp.Re() - this->im*comp.Im();
+    double  y = this->re*comp.Im() + this->im*comp.Re();
     return  Complex(x,y);      
 }
 Complex Complex::operator/(const double &x) const{
     if(x == 0) throw std::domain_error("Can't divide Complex by 0");
-    return Complex(re/x, im/x);
+    return Complex(this->re/x, this->im/x);
 }
 Complex Complex::operator/(const Complex &comp) const{
-    double mod = pow(Module(comp), 2);
+    double mod = pow(comp.Module(), 2);
     if(mod == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex( ( (*this) * Conjugate(comp) )/ mod );
 }
 bool Complex::operator==(const Complex &comp) const{
-    return fabs(re - comp.Re()) < MIN_DIFF && fabs(im - comp.Im()) < MIN_DIFF;
-    // return re == comp.Re() && im == comp.Im();
+    return fabs(this->re - comp.Re()) < MIN_DIFF && fabs(this->im - comp.Im()) < MIN_DIFF;
 }
 bool Complex::operator!=(const Complex &comp) const{
-    return fabs(re - comp.Re()) > MIN_DIFF || fabs(im - comp.Im()) > MIN_DIFF;
-    // return re != comp.Re() || im != comp.Im();
+    return fabs(this->re - comp.Re()) > MIN_DIFF || fabs(this->im - comp.Im()) > MIN_DIFF;
 }
 bool Complex::operator!() const{
     return (*this) == Complex(0, 0);
@@ -54,8 +51,8 @@ bool Complex::operator!() const{
 Complex Complex::Conjugate(const Complex &comp) const{
     return Complex(comp.Re(), -comp.Im());
 }
-double Complex::Module(const Complex &comp) const{
-    return sqrt(pow(comp.Re(), 2) + pow(comp.Im(), 2));
+double Complex::Module() const{
+    return sqrt(pow(this->re, 2) + pow(this->im, 2));
 }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";

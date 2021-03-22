@@ -1,21 +1,22 @@
 #include "QuizDataBase.hpp"
+#include <limits>
 Quiz::Quiz(std::string name){
     std::ifstream file;
     file.open(name + ".dat");
     if(!file.good())
-        throw std::logic_error("Can't open file: "+ name+ ".dat");
+        throw std::logic_error("Can't open file: "+ name + ".dat");
 
     Expression temp;
     
     while (!file.eof()){
         try{
             file >> temp >> std::ws;
-            questions.push_back(temp); 
+            this->questions.push_back(temp); 
         }
         catch (std::logic_error& e){
             std::cerr << "Napotkano bledne wyrazenie. Zostalo ono pominiete." << std::endl;
             file.clear();
-            file.ignore(10000, '\n');
+            file.ignore(std::numeric_limits<int>::max(), '\n');
         }
         catch (...){
             throw;
@@ -24,9 +25,9 @@ Quiz::Quiz(std::string name){
     file.close();
 }
 unsigned int Quiz::size() const{
-    return questions.size();
+    return this->questions.size();
 }
 
 Expression Quiz::operator[](unsigned int index) const{
-    return questions[index];
+    return this->questions[index];
 }

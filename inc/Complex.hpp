@@ -21,7 +21,7 @@ public:
     Complex operator/(const double&) const;
     Complex operator/(const Complex&) const;
     Complex Conjugate(const Complex&) const;
-    double Module(const Complex&) const;
+    double Module() const;
     bool operator==(const Complex&) const;
     bool operator!=(const Complex&) const;
     bool operator!() const;

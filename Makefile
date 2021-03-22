@@ -31,33 +31,33 @@ ${OBJ}/QuizDataBase.o: ${SRC}/QuizDataBase.cpp ${INC}/QuizDataBase.hpp ${INC}/Ex
 ${OBJ}/Statistics.o: ${SRC}/Statistics.cpp inc/Statistics.hpp
 	g++ -c ${FLAGS} -o ${OBJ}/Statistics.o ${SRC}/Statistics.cpp
 
-${TBIN}/test_0.o: ${TBIN} 
-	g++ -o ${TESTS}/bin/test_0.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test0.cpp 
+${TBIN}/test_0: ${TBIN} 
+	g++ -o ${TESTS}/bin/test_0 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test0.cpp 
 
-${TBIN}/test_1.o: ${TBIN} ${OBJ}/Complex.o 
-	g++ -o ${TESTS}/bin/test_1.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test1.cpp ${OBJ}/Complex.o
+${TBIN}/test_1: ${TBIN} ${OBJ}/Complex.o 
+	g++ -o ${TESTS}/bin/test_1 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test1.cpp ${OBJ}/Complex.o
 
-${TBIN}/test_2.o: ${TBIN} ${OBJ}/Complex.o ${OBJ}/Expression.o 
-	g++ -o ${TESTS}/bin/test_2.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test2.cpp ${OBJ}/Complex.o ${OBJ}/Expression.o 
+${TBIN}/test_2: ${TBIN} ${OBJ}/Complex.o ${OBJ}/Expression.o 
+	g++ -o ${TESTS}/bin/test_2 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test2.cpp ${OBJ}/Complex.o ${OBJ}/Expression.o 
 
-${TBIN}/test_3.o: ${TBIN} ${OBJ}/QuizDataBase.o ${OBJ}/Complex.o ${OBJ}/Expression.o 
-	g++ -o ${TESTS}/bin/test_3.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test3.cpp ${OBJ}/Complex.o ${OBJ}/Expression.o ${OBJ}/QuizDataBase.o 
+${TBIN}/test_3: ${TBIN} ${OBJ}/QuizDataBase.o ${OBJ}/Complex.o ${OBJ}/Expression.o 
+	g++ -o ${TESTS}/bin/test_3 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test3.cpp ${OBJ}/Complex.o ${OBJ}/Expression.o ${OBJ}/QuizDataBase.o 
 
-${TBIN}/test_4.o: ${TBIN} ${OBJ}/Statistics.o
-	g++ -o ${TESTS}/bin/test_4.o ${FLAGS} -I${TESTS}/doctest ${TESTS}/test4.cpp
+${TBIN}/test_4: ${TBIN} ${OBJ}/Statistics.o
+	g++ -o ${TESTS}/bin/test_4 ${FLAGS} -I${TESTS}/doctest ${TESTS}/test4.cpp
 
 
 ${TBIN}:
 	mkdir ${TBIN}
 
-test: ${TBIN}/test_0.o  ${TBIN}/test_1.o ${TBIN}/test_2.o  ${TBIN}/test_3.o ${TBIN}/test_4.o
-	${TBIN}/test_0.o 
-	${TBIN}/test_1.o 
-	${TBIN}/test_2.o
-	${TBIN}/test_3.o 
-	${TBIN}/test_4.o
+test: ${TBIN}/test_0  ${TBIN}/test_1 ${TBIN}/test_2  ${TBIN}/test_3 ${TBIN}/test_4
+	${TBIN}/test_0 
+	${TBIN}/test_1 
+	${TBIN}/test_2
+	${TBIN}/test_3 
+	${TBIN}/test_4
 
-testRound:	${TBIN}/test_0.o 
+testRound:	${TBIN}/test_0.o z
 	${TBIN}/test_0.o 
 
 testComplex:  ${TBIN}/test_1.o 

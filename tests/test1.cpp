@@ -45,7 +45,7 @@ TEST_CASE("6. test Complex Conjugate for im = 0"){
 TEST_CASE("7. test Complex Module^2"){
     Complex x(-4, 3);
     double y = 25;
-    double z = pow(x.Module(x), 2);
+    double z = pow(x.Module(), 2);
     CHECK( z == y);
 }
 TEST_CASE("8. test Complex div by scalar"){
@@ -71,76 +71,41 @@ TEST_CASE("11. test Complex Multiplar by scalar"){
     Complex z(-2, 2);
     CHECK(x*y == z);
 }
-
-TEST_CASE("12. test Complex input operator (2-6i)"){
-    // oczekiwany wynik
-    std::string expected = "(2-6i)";
-    // buffor do zapisu strumienia
-    std::stringstream buffer;
-    // nie czaje tego, jakieś przekierowanie
-    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
-
-    // konstruktor LZesp
-    Complex x(2, -6);
-    std::cout << x;
-
-    // zmiana bufora na string 
-    std::string text = buffer.str();
-    // dziwna rzecz bez tego jest segm
-    std::cout.rdbuf(prevcoutbuf);
-    CHECK(text == expected);
+TEST_CASE("12. test Complex input/output operator warn throw (2-6)"){
+    Complex x;
+    std::istringstream in("(2-6)");
+    
+    CHECK_THROWS(in >> x);
 }
-TEST_CASE("13. test Complex input operator (-6i)"){
-    // oczekiwany wynik
-    std::string expected = "(-6i)";
-    // buffor do zapisu strumienia
-    std::stringstream buffer;
-    // nie czaje tego, jakieś przekierowanie
-    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
-
-    // konstruktor LZesp
-    Complex x(0, -6);
-    std::cout << x;
-
-    // zmiana bufora na string 
-    std::string text = buffer.str();
-    // dziwna rzecz bez tego jest segm
-    std::cout.rdbuf(prevcoutbuf);
-    CHECK(text == expected);
+TEST_CASE("13. test Complex input/output operator (2-6i)"){
+    Complex x;
+    std::istringstream in("(2-6i)");
+    in >> x;
+    std::ostringstream out;
+    out << x;
+    CHECK(out.str() == "(2-6i)");
 }
-TEST_CASE("14. test Complex input operator (-i)"){
-    // oczekiwany wynik
-    std::string expected = "(-i)";
-    // buffor do zapisu strumienia
-    std::stringstream buffer;
-    // nie czaje tego, jakieś przekierowanie
-    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
-
-    // konstruktor LZesp
-    Complex x(0, -1);
-    std::cout << x;
-
-    // zmiana bufora na string 
-    std::string text = buffer.str();
-    // dziwna rzecz bez tego jest segm
-    std::cout.rdbuf(prevcoutbuf);
-    CHECK(text == expected);
+TEST_CASE("14. test Complex input/output operator (-6i)"){
+    Complex x;
+    std::istringstream in("(-6i)");
+    in >> x;
+    std::ostringstream out;
+    out << x;
+    CHECK(out.str() == "(-6i)");
 }
-// TEST_CASE("15. test Complex input operator (2+0i), should be error"){
-//     // oczekiwany wynik
-//     Complex y(0, -1);
-//     // buffor do zapisu strumienia
-//     std::stringstream buffer;
-//     // nie czaje tego, jakieś przekierowanie
-//     std::streambuf* prevcoutbuf = std::cin.rdbuf(buffer.rdbuf());
-
-//     // konstruktor LZesp
-//     std::string input = "(i)";
-//     std::cin >> input;
-
-//     // zmiana bufora na string 
-//     std::string text = buffer.str();
-//     // dziwna rzecz bez tego jest segm
-//     std::cout.rdbuf(prevcoutbuf);
-//     CHECK(text == expected);
-// }
+TEST_CASE("15. test Complex input/output operator (-i)"){
+    Complex x;
+    std::istringstream in("(-i)");
+    in >> x;
+    std::ostringstream out;
+    out << x;
+    CHECK(out.str() == "(-i)");
+}
+TEST_CASE("16. test Complex input/output operator (0.00009-i)"){
+    Complex x;
+    std::istringstream in("(0.00009-i)");
+    in >> x;
+    std::ostringstream out;
+    out << x;
+    CHECK(out.str() == "(0.0001-i)");
+}

@@ -2,8 +2,7 @@
 #include "./doctest/doctest.h"
 #include "QuizDataBase.hpp"
 TEST_CASE("1. Init Quiz latwe"){
-    Quiz q("latwy");
-    CHECK(1==1);
+    CHECK_NOTHROW( Quiz q("latwy"));
 }
 TEST_CASE("2. Quiz Size"){
     Quiz q("latwy");

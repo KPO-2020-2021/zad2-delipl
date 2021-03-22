@@ -13,11 +13,10 @@ double fo(double re){
 }
 TEST_CASE("1. Positive round up"){
     double re = fo(3.02689);
-    std::cout << re <<std::endl;
     CHECK(re == 3.0269);
 }
 TEST_CASE("2. Negative round up"){
-    double re = fo(-5.99995);
+    double re = fo(-5.99996);
     CHECK(re == -6);
 }
 TEST_CASE("3. Positive round down"){

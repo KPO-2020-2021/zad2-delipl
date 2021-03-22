@@ -4,7 +4,6 @@ std::ostream&  operator << (std::ostream& cout, const Operator& op){
     return cout << op;
 }
 std::istream&  operator >> (std::istream &cin, Operator &op){
-    // return cin >> op;
     char c = '+';
     cin >> c;
     if(cin.fail()) 
@@ -32,35 +31,35 @@ std::istream&  operator >> (std::istream &cin, Operator &op){
     }
 }
 Expression::Expression(){
-    arg1 = Complex();
-    op = Operator::Op_Add;
-    arg2 = Complex();
+    this->arg1 = Complex();
+    this->op = Operator::Op_Add;
+    this->arg2 = Complex();
 } 
 Expression::Expression(const Complex &x, const Operator &o, const Complex &y){
-    arg1 = x;
-    op = o;
-    arg2 = y;
+    this->arg1 = x;
+    this->op = o;
+    this->arg2 = y;
 
 }
 Expression::Expression(const Expression &exp){
-    arg1 = exp.Arg1();
-    op = exp.Op();
-    arg2 = exp.Arg2();
+    this->arg1 = exp.Arg1();
+    this->op = exp.Op();
+    this->arg2 = exp.Arg2();
 }
 Complex Expression::Calculate() const{
     Complex comp;
     switch(op){
         case Operator::Op_Add:
-            comp = arg1 + arg2;
+            comp = this->arg1 + this->arg2;
             break;
         case Operator::Op_Sub:
-            comp = arg1 - arg2;
+            comp = this->arg1 - this->arg2;
             break;
         case  Operator::Op_Mul:
-            comp = arg1 * arg2;
+            comp = this->arg1 * this->arg2;
             break;
         case Operator::Op_Div:
-            comp = arg1 / arg2;
+            comp = this->arg1 / this->arg2;
             break;
         default:
             throw std::logic_error("In Complex CalculateExpression(Expression exp) Can't find operator!");
@@ -69,10 +68,10 @@ Complex Expression::Calculate() const{
     return comp;
 }
 bool Expression::operator == (const Expression& exp) const{
-    return arg1 == exp.Arg1() && arg2 == exp.Arg2() && op == exp.Op();
+    return this->arg1 == exp.Arg1() && this->arg2 == exp.Arg2() && this->op == exp.Op();
 }
 bool Expression::operator != (const Expression& exp) const{
-    return arg1 !=exp.Arg1() || arg2 != exp.Arg2() || op != exp.Op();
+    return this->arg1 !=exp.Arg1() || this->arg2 != exp.Arg2() || this->op != exp.Op();
 }
 
 std::istream&  operator >> (std::istream &cin, Expression &exp){         
