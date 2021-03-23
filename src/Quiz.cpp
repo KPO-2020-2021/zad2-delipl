@@ -1,4 +1,4 @@
-#include "QuizDataBase.hpp"
+#include "Quiz.hpp"
 #include <limits>
 Quiz::Quiz(std::string name){
     std::ifstream file;

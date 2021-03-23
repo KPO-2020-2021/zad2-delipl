@@ -1,6 +1,6 @@
 #include <iostream>
 #include <limits>
-#include "QuizDataBase.hpp"
+#include "Quiz.hpp"
 #include "Statistics.hpp"
 
 using namespace std;
