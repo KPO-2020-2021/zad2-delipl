@@ -1,5 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "./doctest/doctest.h"
+#include "doctest.h"
+
 #include "Complex.hpp"
 TEST_CASE("0. test Complex construct round"){
     Complex x(0.10004,  5.00255);

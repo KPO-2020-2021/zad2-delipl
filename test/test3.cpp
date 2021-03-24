@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "./doctest/doctest.h"
-#include "QuizDataBase.hpp"
+#include "doctest.h"
+
+#include "Quiz.hpp"
 TEST_CASE("1. Init Quiz latwe"){
     CHECK_NOTHROW( Quiz q("latwy"));
 }

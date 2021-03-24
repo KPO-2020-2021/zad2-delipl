@@ -1,8 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "./doctest/doctest.h"
-#include <iostream>
+#include "doctest.h"
+
+
 #define MIN_DIFF 0.0001
-// function fo() is used in Complex constructor
 double fo(double re){
     double x  = re;
     re = (int)(re * pow(MIN_DIFF, -1));
