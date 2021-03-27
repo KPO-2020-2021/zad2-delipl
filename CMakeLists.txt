@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(SRC ./src)
 # Include directory .h files
 set(INC ./inc)
+# Include libraries
+set(LIB ./lib)
 
 # Build Complex library
 add_library(COMP ${INC}/Complex.hpp ${SRC}/Complex.cpp)
@@ -34,35 +36,42 @@ target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
 
 # =============================[TESTS]============================
-# Download doctest
-include(ExternalProject)
-find_package(Git REQUIRED)
-
-ExternalProject_Add(
-    doctest
-    PREFIX ${CMAKE_BINARY_DIR}/doctest
-    GIT_REPOSITORY https://github.com/onqtam/doctest.git
-    TIMEOUT 10
-    UPDATE_COMMAND ${GIT_EXECUTABLE} pull
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-    LOG_DOWNLOAD ON
-)
-
-# Expose required variable (DOCTEST_INCLUDE_DIR) to parent scope
-ExternalProject_Get_Property(doctest source_dir)
-set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
+# Include doctest
+add_subdirectory(${LIB}/doctest)
+set(DOCTEST_INCLUDE_DIR ${LIB}/doctest/doctest)
 
 # Build tests
 set(TEST ./test/)
-add_executable(${PROJECT_NAME}-ut  ${TEST}/test0.cpp ${TEST}/test1.cpp ${TEST}/test2.cpp ${TEST}/test3.cpp ${TEST}/test4.cpp )
-target_include_directories(${PROJECT_NAME}-ut PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut PUBLIC  COMP EXPR QUIZ STAT)
+
+add_executable(${PROJECT_NAME}-ut0  ${TEST}/test0.cpp )
+target_include_directories(${PROJECT_NAME}-ut0 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(${PROJECT_NAME}-ut0 PUBLIC COMP EXPR QUIZ STAT doctest)
+
+add_executable(${PROJECT_NAME}-ut1  ${TEST}/test1.cpp )
+target_include_directories(${PROJECT_NAME}-ut1 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(${PROJECT_NAME}-ut1 PUBLIC COMP EXPR QUIZ STAT doctest)
+
+add_executable(${PROJECT_NAME}-ut2  ${TEST}/test2.cpp )
+target_include_directories(${PROJECT_NAME}-ut2 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(${PROJECT_NAME}-ut2 PUBLIC COMP EXPR QUIZ STAT doctest)
+
+add_executable(${PROJECT_NAME}-ut3  ${TEST}/test3.cpp )
+target_include_directories(${PROJECT_NAME}-ut3 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(${PROJECT_NAME}-ut3 PUBLIC COMP EXPR QUIZ STAT doctest)
+
+add_executable(${PROJECT_NAME}-ut4  ${TEST}/test4.cpp )
+target_include_directories(${PROJECT_NAME}-ut4 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(${PROJECT_NAME}-ut4 PUBLIC COMP EXPR QUIZ STAT doctest)
+
+# Build all tests
+# file( GLOB TESTS_CPP ${TEST}/*.cpp )
+# add_executable(${PROJECT_NAME}-ut  ${TESTS_CPP})
+# target_include_directories(${PROJECT_NAME}-ut PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+# target_link_libraries(${PROJECT_NAME}-ut PUBLIC doctest COMP EXPR QUIZ STAT)
 
 # Set compile flags
-target_compile_options(${PROJECT_NAME}-ut   PUBLIC ${FLAGS})
-
-
-
-
+# target_compile_options(${PROJECT_NAME}-ut0   PUBLIC ${FLAGS})
+# target_compile_options(${PROJECT_NAME}-ut1   PUBLIC ${FLAGS})
+# target_compile_options(${PROJECT_NAME}-ut2   PUBLIC ${FLAGS})
+# target_compile_options(${PROJECT_NAME}-ut3   PUBLIC ${FLAGS})
+# target_compile_options(${PROJECT_NAME}-ut4   PUBLIC ${FLAGS})

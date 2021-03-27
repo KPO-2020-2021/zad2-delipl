@@ -81,93 +81,96 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << ")";
 	return cout;
 }
-
+void putback(std::istream& cin, double x){
+    std::string xS = std::to_string(x);
+    char c = 'f';
+    int j = 1, i = 0;
+    for(int i = 0; i < xS.length(); i++){
+        c = xS[i];
+        cin.putback(xS[i]);
+        if(xS[i] == '.'){
+            for(j = 1; j >= MIN_DIFF && i < xS.length(); j *= 0.1){
+                i++;
+                c = xS[i];
+                cin.putback(xS[i]);
+            }
+            break;
+        }
+    }
+}
 std::istream& operator>>(std::istream& cin, Complex& comp){
-	std::string temp; char a, b = 'f';
-	cin >> std::ws >> a;
-	if(a != '(')
-		throw std::logic_error("Blednie podana liczba zespolona");
-	cin >> std::ws >> a;
-	if (a == 'i'){  //(i)
-		comp.re = 0; comp.im = 1;
-
-		cin >> std::ws >> a;
-		if (a != ')')
-			throw std::logic_error("Blednie podana liczba zespolona");
-
-		return cin;
-	}
-	else if (a == '+' || a == '-'){
-		b = a;
-		cin >> std::ws >> a;
-		if (a == 'i') //(+i) (-i)
-		{
-			comp.re = 0; comp.im = (b == '+' ? 1 : -1);
-			cin >> std::ws >> a;
-			if (a != ')')
-				throw std::logic_error("Blednie podana liczba zespolona");
-			return cin;
-		}
-	}
-	cin.putback(a);
-	cin >> comp.re;
-	if(cin.fail())
-		throw std::logic_error("Blednie podana liczba zespolona");
-    if(comp.re < MIN_DIFF){
-        comp.re = comp.re < MIN_DIFF/2? 0.0: MIN_DIFF;
+    double x = 0.0, y = 0.0, im = 0.0, re = 0.0;
+    char c;
+    enum  State {openBracket, number, plusMinus, closeBracket};
+    State state = State::openBracket;
+    bool end = false;
+    while(!end){
+        switch(state){
+            case State::openBracket:
+                cin >> std::ws >> c;
+                if(cin.fail())
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                if(c != '(')
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                state = State::plusMinus;
+                break;
+            case State::plusMinus:
+                cin >> std::ws >> c;
+                if(cin.fail())
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                if(c == '-') {
+                    x = -1;
+                    state = State::number;
+                }
+                else if(c == '+'){
+                    x = 1;
+                    state = State::number;
+                }
+                else if(isdigit(c)){
+                    x = 1;
+                    cin.putback(c);
+                    state = State::number;
+                }
+                else if(c == 'i'){
+                    im = 1;
+                    state = State::closeBracket;
+                }
+                else {
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                } 
+                break;
+            case State::number:
+                if(cin.peek() == 'i'){
+                    im = x;
+                    cin.get();
+                    state = State::closeBracket;
+                    break;
+                }
+                cin >> std::ws >> y;
+                if(cin.fail())
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                y *= x;
+                if(cin.peek() == 'i'){
+                    im = y;
+                    cin.get();
+                    state = State::closeBracket;
+                }
+                else{
+                    re = y;
+                    state = State::plusMinus;
+                }
+                break;
+            case State::closeBracket: 
+                cin >> std::ws >> c;
+                if(cin.fail())
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                if(c != ')')
+                    throw std::logic_error("Blednie podana liczba zespolona");
+                end = true;
+                break;
+        }
     }
-	if (b == '-')
-		comp.re *= -1;
-    
-    
-	b = 'f';
-	cin >> std::ws >> a;
-	if (a == ')')
-		return cin;
-	else if (a == 'i'){
-		comp.im = comp.re;  comp.re = 0;
-		cin >> std::ws >> a;
-		if (a != ')')
-			throw std::logic_error("Blednie podana liczba zespolona");
-
-		return cin;
-	}
-	else if (a == '+' || a == '-'){
-		b = a;
-		cin >> std::ws >> a;
-		if (a == 'i')
-		{
-			comp.im = (b == '+' ? 1 : -1);
-			cin >> std::ws >> a;
-			if (a != ')')
-				throw std::logic_error("Blednie podana liczba zespolona");
-
-			return cin;
-		}
-		cin.putback(a);
-	}
-	else{
-		throw std::logic_error("Blednie podana liczba zespolona");
-	}
-
-    cin >> comp.im;
-	if (cin.fail())
-		throw std::logic_error("Blednie podana liczba zespolona");
-    if(comp.im < MIN_DIFF){
-        comp.im = comp.im < MIN_DIFF/2? 0.0: MIN_DIFF;
-    }
-	if (b == '-')
-		comp.im *= -1;
-
-	cin >> std::ws >> a;
-	if (a != 'i')
-		throw std::logic_error("Blednie podana liczba zespolona");
-
-
-	cin >> std::ws >> a;
-	if (a != ')')
-		throw std::logic_error("Blednie podana liczba zespolona");
-
+    comp = Complex(re, im);
 	return cin;
 }
 

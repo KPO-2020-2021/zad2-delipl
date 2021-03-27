@@ -2,13 +2,13 @@
 #include "doctest.h"
 
 #include "Complex.hpp"
-TEST_CASE("0. test Complex construct round"){
+TEST_CASE("0. test Complex constructor round"){
     Complex x(0.10004,  5.00255);
     Complex z(0.1000,   5.0026);
     CHECK(x == z);
 }
 
-TEST_CASE("1. test Complex construct round"){
+TEST_CASE("1. test Complex constructor round"){
     Complex x(0.10004,  5.00255);
     Complex z(0.1000,   5.0026);
     CHECK(x == z);
