@@ -4,7 +4,7 @@
     #include <cmath>
 #endif
 
-#include "Quiz.hpp"
+#include "Quiz.h"
 TEST_CASE("1. Quiz constructor and reading file latwe"){
     CHECK_NOTHROW( Quiz q("latwy"));
 }

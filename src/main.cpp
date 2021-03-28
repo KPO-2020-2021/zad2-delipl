@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
-#include "Quiz.hpp"
-#include "Statistics.hpp"
+#include "Quiz.h"
+#include "Statistics.h"
 
 using namespace std;
 
@@ -58,12 +58,17 @@ int main(int argc, char **argv){
         }
         cout << "Koniec testu!" << endl << stats;
     }
+    catch(std::runtime_error &e){
+        cerr << e.what() << endl;
+        return -1;
+    }
     catch (std::logic_error& e){
         cerr << e.what() << endl;
         cin.clear();
-        cin.ignore(10000, '\n');
+        cin.ignore(std::numeric_limits<int>::max(), '\n');
         return 2;
     }
+    
     catch (...){
         cerr << "Unknown error" << endl;
     }

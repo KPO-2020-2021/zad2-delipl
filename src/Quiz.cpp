@@ -1,11 +1,11 @@
-#include "Quiz.hpp"
+#include "Quiz.h"
 #include <limits>
 #include <fstream>
 Quiz::Quiz(std::string name){
     std::ifstream file;
     file.open(name + ".dat");
     if(!file.good())
-        throw std::logic_error("Can't open file: "+ name + ".dat");
+        throw std::runtime_error("Can't open file: "+ name + ".dat");
 
     Expression temp;
     

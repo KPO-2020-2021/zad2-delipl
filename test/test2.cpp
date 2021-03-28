@@ -3,7 +3,7 @@
     #include "doctest.h"
     #include <cmath>
 #endif
-#include "Expression.hpp"
+#include "Expression.h"
 
 TEST_CASE("1. Operator create"){  
     CHECK_NOTHROW(Operator op = Operator::Op_Add);

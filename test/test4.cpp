@@ -3,7 +3,7 @@
     #include "doctest.h"
     #include <cmath>
 #endif
-#include "Statistics.hpp"
+#include "Statistics.h"
 TEST_CASE("1. Statistics constructor"){
     CHECK_NOTHROW(Statistics s);
 }

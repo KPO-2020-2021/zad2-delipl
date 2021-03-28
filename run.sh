@@ -6,3 +6,5 @@ cd build
 cmake .
 make 
 ./ut
+echo ""
+./ComplexQuiz latwy

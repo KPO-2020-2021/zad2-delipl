@@ -1,6 +1,6 @@
 #ifndef EXPRESSION_HPP
 #define EXPRESSION_HPP
-#include "Complex.hpp"
+#include "Complex.h"
 #include <iostream>
 enum class Operator : char {
     Op_Add = '+',

@@ -1,6 +1,6 @@
 #ifndef QUIZDATABASE_HPP
 #define QUIZDATABASE_HPP
-#include "Expression.hpp"
+#include "Expression.h"
 #include <vector>
 /*
  * Modeluje pojecie baze testu z zestawem pytan w tablicy

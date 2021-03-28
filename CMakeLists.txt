@@ -10,20 +10,20 @@ set(INC ./inc)
 set(LIB ./lib)
 
 # Build Complex library
-add_library(COMP ${INC}/Complex.hpp ${SRC}/Complex.cpp)
+add_library(COMP ${INC}/Complex.h ${SRC}/Complex.cpp)
 target_include_directories(COMP PUBLIC ${INC})
 
 # Build Expression library
-add_library(EXPR ${INC}/Expression.hpp ${SRC}/Expression.cpp)
+add_library(EXPR ${INC}/Expression.h ${SRC}/Expression.cpp)
 target_link_libraries(EXPR COMP)
 target_include_directories(EXPR PUBLIC ${INC})
 
 # Build Quiz library
-add_library(QUIZ ${INC}/Quiz.hpp ${SRC}/Quiz.cpp ${COMP} ${EXPR})
+add_library(QUIZ ${INC}/Quiz.h ${SRC}/Quiz.cpp ${COMP} ${EXPR})
 target_include_directories(QUIZ PUBLIC ${INC})
 
 # Build Statistics Library
-add_library(STAT ${INC}/Statistics.hpp ${SRC}/Statistics.cpp)
+add_library(STAT ${INC}/Statistics.h ${SRC}/Statistics.cpp)
 target_include_directories(STAT PUBLIC ${INC})
 
 # Build main function

@@ -4,7 +4,7 @@
     #include <cmath>
 #endif
 
-#include "Complex.hpp"
+#include "Complex.h"
 TEST_CASE("1. Complex default constructor round"){
     CHECK_NOTHROW(Complex x);
 }

@@ -1,4 +1,4 @@
-#include "Statistics.hpp"
+#include "Statistics.h"
 
 /*
  * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
