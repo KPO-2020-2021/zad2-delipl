@@ -1,5 +1,9 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
+#ifndef TESTRUNNER_CPP
+    #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+    #include "doctest.h"
+    #include <cmath>
+#endif
+
 #include "Expression.hpp"
 
 // TEST_CASE("1. Init Quiz latwe"){

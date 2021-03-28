@@ -43,35 +43,28 @@ set(DOCTEST_INCLUDE_DIR ${LIB}/doctest/doctest)
 # Build tests
 set(TEST ./test/)
 
-add_executable(${PROJECT_NAME}-ut0  ${TEST}/test0.cpp )
-target_include_directories(${PROJECT_NAME}-ut0 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut0 PUBLIC COMP EXPR QUIZ STAT doctest)
+add_executable(ut0  ${TEST}/test0.cpp )
+target_include_directories(ut0 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut0 PUBLIC COMP EXPR QUIZ STAT doctest)
 
-add_executable(${PROJECT_NAME}-ut1  ${TEST}/test1.cpp )
-target_include_directories(${PROJECT_NAME}-ut1 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut1 PUBLIC COMP EXPR QUIZ STAT doctest)
+add_executable(ut1  ${TEST}/test1.cpp )
+target_include_directories(ut1 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut1 PUBLIC COMP EXPR QUIZ STAT doctest)
 
-add_executable(${PROJECT_NAME}-ut2  ${TEST}/test2.cpp )
-target_include_directories(${PROJECT_NAME}-ut2 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut2 PUBLIC COMP EXPR QUIZ STAT doctest)
+add_executable(ut2  ${TEST}/test2.cpp )
+target_include_directories(ut2 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut2 PUBLIC COMP EXPR QUIZ STAT doctest)
 
-add_executable(${PROJECT_NAME}-ut3  ${TEST}/test3.cpp )
-target_include_directories(${PROJECT_NAME}-ut3 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut3 PUBLIC COMP EXPR QUIZ STAT doctest)
+add_executable(ut3  ${TEST}/test3.cpp )
+target_include_directories(ut3 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut3 PUBLIC COMP EXPR QUIZ STAT doctest)
 
-add_executable(${PROJECT_NAME}-ut4  ${TEST}/test4.cpp )
-target_include_directories(${PROJECT_NAME}-ut4 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-target_link_libraries(${PROJECT_NAME}-ut4 PUBLIC COMP EXPR QUIZ STAT doctest)
+add_executable(ut4  ${TEST}/test4.cpp )
+target_include_directories(ut4 PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut4 PUBLIC COMP EXPR QUIZ STAT doctest)
 
 # Build all tests
-# file( GLOB TESTS_CPP ${TEST}/*.cpp )
-# add_executable(${PROJECT_NAME}-ut  ${TESTS_CPP})
-# target_include_directories(${PROJECT_NAME}-ut PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
-# target_link_libraries(${PROJECT_NAME}-ut PUBLIC doctest COMP EXPR QUIZ STAT)
+add_executable(ut-all ${TEST}/testRunner.cpp)
+target_include_directories(ut-all PUBLIC ${DOCTEST_INCLUDE_DIR} ${INC})
+target_link_libraries(ut-all PUBLIC COMP EXPR QUIZ STAT doctest)
 
-# Set compile flags
-# target_compile_options(${PROJECT_NAME}-ut0   PUBLIC ${FLAGS})
-# target_compile_options(${PROJECT_NAME}-ut1   PUBLIC ${FLAGS})
-# target_compile_options(${PROJECT_NAME}-ut2   PUBLIC ${FLAGS})
-# target_compile_options(${PROJECT_NAME}-ut3   PUBLIC ${FLAGS})
-# target_compile_options(${PROJECT_NAME}-ut4   PUBLIC ${FLAGS})

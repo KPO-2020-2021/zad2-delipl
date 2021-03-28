@@ -1,6 +1,8 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "doctest.h"
-
+#ifndef TESTRUNNER_CPP
+    #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+    #include "doctest.h"
+    #include <cmath>
+#endif
 
 #define MIN_DIFF 0.0001
 double fo(double re){

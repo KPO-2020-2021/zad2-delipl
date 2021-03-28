@@ -81,27 +81,10 @@ std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << ")";
 	return cout;
 }
-void putback(std::istream& cin, double x){
-    std::string xS = std::to_string(x);
-    char c = 'f';
-    int j = 1, i = 0;
-    for(int i = 0; i < xS.length(); i++){
-        c = xS[i];
-        cin.putback(xS[i]);
-        if(xS[i] == '.'){
-            for(j = 1; j >= MIN_DIFF && i < xS.length(); j *= 0.1){
-                i++;
-                c = xS[i];
-                cin.putback(xS[i]);
-            }
-            break;
-        }
-    }
-}
 std::istream& operator>>(std::istream& cin, Complex& comp){
     double x = 0.0, y = 0.0, im = 0.0, re = 0.0;
     char c;
-    enum  State {openBracket, number, plusMinus, closeBracket};
+    enum  State {openBracket, number, checkChar, closeBracket};
     State state = State::openBracket;
     bool end = false;
     while(!end){
@@ -110,11 +93,11 @@ std::istream& operator>>(std::istream& cin, Complex& comp){
                 cin >> std::ws >> c;
                 if(cin.fail())
                     throw std::logic_error("Blednie podana liczba zespolona");
-                if(c != '(')
+                if(c != '(' || cin.peek() == ')')
                     throw std::logic_error("Blednie podana liczba zespolona");
-                state = State::plusMinus;
+                state = State::checkChar;
                 break;
-            case State::plusMinus:
+            case State::checkChar:
                 cin >> std::ws >> c;
                 if(cin.fail())
                     throw std::logic_error("Blednie podana liczba zespolona");
@@ -135,6 +118,10 @@ std::istream& operator>>(std::istream& cin, Complex& comp){
                     im = 1;
                     state = State::closeBracket;
                 }
+                else if(c == ')'){
+                    cin.putback(c);
+                    state = State::closeBracket;
+                }
                 else {
                     throw std::logic_error("Blednie podana liczba zespolona");
                 } 
@@ -151,13 +138,13 @@ std::istream& operator>>(std::istream& cin, Complex& comp){
                     throw std::logic_error("Blednie podana liczba zespolona");
                 y *= x;
                 if(cin.peek() == 'i'){
-                    im = y;
+                    im += y;
                     cin.get();
-                    state = State::closeBracket;
+                    state = State::checkChar;
                 }
                 else{
-                    re = y;
-                    state = State::plusMinus;
+                    re += y;
+                    state = State::checkChar;
                 }
                 break;
             case State::closeBracket: 
