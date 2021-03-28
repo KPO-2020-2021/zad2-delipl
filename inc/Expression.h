@@ -40,7 +40,8 @@ std::ostream& operator<<(std::ostream&, const Operator&);
 std::istream& operator>>(std::istream&, Operator&);
 
 /**
- * @brief Class with Expression of Complex numbers.
+ * @brief   Class with Expression of Complex numbers. Allow to read and calculate 
+ *          Complex Expression.          
  */
 class Expression {
 

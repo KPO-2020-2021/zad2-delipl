@@ -10,7 +10,7 @@
 #define MIN_DIFF 0.0001
 
 /**
- * @brief Class with Complex numbers .
+ * @brief Class with Complex numbers. Allows to use many mathematical operations.
  */
 class Complex {
 
