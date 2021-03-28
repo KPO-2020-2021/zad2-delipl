@@ -3,7 +3,7 @@ mkdir build/
 cp latwy.dat build/
 cp trudny.dat
 cd build
-cmake .
+cmake ../
 make 
 ./ut
 echo ""
