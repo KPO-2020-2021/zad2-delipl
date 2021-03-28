@@ -3,7 +3,7 @@
 #include <fstream>
 Quiz::Quiz(std::string name){
     std::ifstream file;
-    file.open(name + ".dat");
+    file.open("dat/"+ name + ".dat");
     if(!file.good())
         throw std::runtime_error("Can't open file: "+ name + ".dat");
 

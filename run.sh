@@ -5,7 +5,8 @@ cp latwy.dat build/
 cp trudny.dat
 cd build
 cmake ../
-make 
-./ut
+make
+cd .. 
+./build/ut
 echo ""
-./ComplexQuiz latwy
+./build/ComplexQuiz latwy

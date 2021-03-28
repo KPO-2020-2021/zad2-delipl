@@ -17,7 +17,7 @@ target_include_directories(COMP PUBLIC ${INC})
 add_library(EXPR ${INC}/Expression.h ${SRC}/Expression.cpp)
 target_link_libraries(EXPR COMP)
 target_include_directories(EXPR PUBLIC ${INC})
-
+ 
 # Build Quiz library
 add_library(QUIZ ${INC}/Quiz.h ${SRC}/Quiz.cpp ${COMP} ${EXPR})
 target_include_directories(QUIZ PUBLIC ${INC})

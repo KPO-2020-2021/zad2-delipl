@@ -13,9 +13,9 @@ std::istream&  operator >> (std::istream &cin, Expression::Operator &op){
         op = Expression::Operator::Op_Add;
         return cin;
         break;
-    case '-':
+    case '-': 
         op = Expression::Operator::Op_Sub;
-        return cin;
+        return cin; 
         break;
     case '*':
         op = Expression::Operator::Op_Mul;
