@@ -6,10 +6,10 @@
 #include "Expression.h"
 
 TEST_CASE("1. Operator create"){  
-    CHECK_NOTHROW(Operator op = Operator::Op_Add);
+    CHECK_NOTHROW(Expression::Operator op = Expression::Operator::Op_Add);
 }
 TEST_CASE("2. Operator input/output operator "){
-    Operator op;
+    Expression::Operator op;
     std::istringstream in("-");
     in >> op;
     std::ostringstream out;
@@ -17,7 +17,7 @@ TEST_CASE("2. Operator input/output operator "){
     CHECK(out.str() == "-");
 }
 TEST_CASE("3. Operator input/output operator throw error"){
-    Operator op;
+    Expression::Operator op;
     std::istringstream in("%");
     CHECK_THROWS(in >> op);
 }
@@ -27,20 +27,20 @@ TEST_CASE("4. Expression default constructor"){
 TEST_CASE("5. Expression constructor with 2 Complex"){  
     Complex x(5,-3);
     Complex y(9, -69);
-    Expression exp(x, Operator::Op_Div,y);
-    CHECK((exp.Arg1() == x && exp.Arg2() == y && exp.Op() == Operator::Op_Div) == true);
+    Expression exp(x, Expression::Operator::Op_Div,y);
+    CHECK((exp.Arg1() == x && exp.Arg2() == y && exp.Op() == Expression::Operator::Op_Div) == true);
 }
 TEST_CASE("6. Expression Copying constructor"){  
     Complex x(5,-3);
     Complex y(9, -69);
-    Expression exp(x, Operator::Op_Div,y);
+    Expression exp(x, Expression::Operator::Op_Div,y);
     Expression z(exp);
     CHECK(exp == z);
 }
 TEST_CASE("7. Expression Calculate function"){  
     Complex x(0.00006,2);
     Complex y(0.6, 2);
-    Expression exp(x, Operator::Op_Mul,y);
+    Expression exp(x, Expression::Operator::Op_Mul,y);
     Complex z(exp.Calculate());
     Complex w(-3.9999, 1.2001);
     CHECK(w == z);

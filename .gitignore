@@ -9,3 +9,4 @@ build/*
 # lol
 makefile
 workspace.code-workspace
+doc/

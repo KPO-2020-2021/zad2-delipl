@@ -1,3 +1,14 @@
+/**
+ * @file main.cpp
+ * @author Jakub Delicat
+ * @brief Arythmetic Complex Quiz for poor first semester students. Beer!
+ * @version 1.0v
+ * @date 2021.03.28
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include <iostream>
 #include <limits>
 #include "Quiz.h"

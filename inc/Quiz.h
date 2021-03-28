@@ -1,3 +1,10 @@
+/**
+ * @brief   Library to use Expressions as questions
+ * @author  Jakub Delicat
+ * @version 1.0v
+ * @date    28.03.2021r.
+ */
+
 #ifndef QUIZDATABASE_HPP
 #define QUIZDATABASE_HPP
 #include "Expression.h"

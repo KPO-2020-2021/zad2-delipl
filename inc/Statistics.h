@@ -1,3 +1,10 @@
+/**
+ * @brief   Library to provide statistics
+ * @author  Jakub Delicat
+ * @version 1.0v
+ * @date    28.03.2021r.
+ */
+
 #ifndef STATISTICS_HPP
 #define STATISTICS_HPP
 #include <iostream>

@@ -1,7 +1,15 @@
+/**
+ * @brief   Library to use Complex numbers
+ * @author  Jakub Delicat
+ * @version 1.0v
+ * @date    28.03.2021r.
+ */
+
 #ifndef COMPLEX_HPP
 #define COMPLEX_HPP
 #include <cmath>
 #include <iostream>
+
 /**
  * @brief Minimal diffrence to compare and round two double numbers.
  * For example 0.00003 = 0 or 0.00006 = 0.0001 for MIN_DIFF = 0.0001. 

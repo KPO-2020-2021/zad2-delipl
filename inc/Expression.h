@@ -1,50 +1,38 @@
+/**
+ * @brief   Library to use Complex numbers in one Expression
+ * @author  Jakub Delicat
+ * @version 1.0v
+ * @date    28.03.2021r.
+ */
+
 #ifndef EXPRESSION_HPP
 #define EXPRESSION_HPP
 #include "Complex.h"
 #include <iostream>
 
 /**
- * @brief Mathematical operators saved as char to print easly.
- */
-enum class Operator : char {
-    Op_Add = '+',
-    Op_Sub = '-',
-    Op_Mul = '*',
-    Op_Div = '/'
-};
-
-/**
- * @brief Compare Operator and char
- * @return  True when Operator value is the char value. 
-            False when Operator value is not the char value.
- */
-bool operator== (const Operator, const char);
-
-/**
- * @brief Compare two Operators
- * @return  True when they are the same.
-            False when they are not.
- */
-bool operator== (const Operator, const Operator);
-
-/**
- * @brief Read Operator.
- * @return std::ostream& output stream.
- */
-std::ostream& operator<<(std::ostream&, const Operator&);
-
-/**
- * @brief Print Operator.
- * @return std::istream& input stream.
- */
-std::istream& operator>>(std::istream&, Operator&);
-
-/**
  * @brief   Class with Expression of Complex numbers. Allow to read and calculate 
  *          Complex Expression.          
  */
 class Expression {
+public:
+    /**
+     * @brief Mathematical operators saved as char to print easly.
+    */
+    enum class Operator : char {
+        Op_Add = '+',
+        Op_Sub = '-',
+        Op_Mul = '*',
+        Op_Div = '/'
+    };
 
+    /**
+     * @brief Print Operator.
+     * @return std::istream& input stream.
+     */
+    friend std::istream& operator>>(std::istream&, Operator&);
+
+private:
     /**
      * @brief First Complex of mathematic operation.
      */
@@ -77,19 +65,19 @@ public:
 
     /**
      * @brief Construct a new Expression object.
-     * @param Expression Copy @a arg1 , @a arg2 and op.
+     * @param Expression Copy arg1, arg2 and op.
      */
     Expression(const Expression&);
 
     /**
      * @brief Acces to read first Complex.
-     * @return Complex @a arg1.
+     * @return Complex arg1.
      */
     Complex Arg1() const { return arg1; }
 
     /**
      * @brief Acces to read second Complex.
-     * @return Complex @a arg2.
+     * @return Complex arg2.
      */
     Complex Arg2() const { return arg2; }
 
@@ -127,8 +115,29 @@ public:
 };
 
 /**
+ * @brief Compare Operator and char
+ * @return  True when Operator value is the char value. 
+            False when Operator value is not the char value.
+ */
+bool operator== (const Expression::Operator, const char);
+
+/**
+ * @brief Compare two Operators
+ * @return  True when they are the same.
+            False when they are not.
+ */
+bool operator== (const Expression::Operator, const Expression::Operator);
+
+/**
+ * @brief Read Operator.
+ * @return std::ostream& output stream.
+ */
+std::ostream& operator<<(std::ostream&, const Expression::Operator&);
+
+/**
  * @brief Print Expression.
  * @return std::ostream& output stream.
  */
 std::ostream& operator<<(std::ostream&, const Expression&);
+
 #endif

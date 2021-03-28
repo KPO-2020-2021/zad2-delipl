@@ -1,28 +1,28 @@
 #include "Expression.h"
 
-std::ostream&  operator << (std::ostream& cout, const Operator& op){
+std::ostream&  operator << (std::ostream& cout, const Expression::Operator& op){
     return cout << static_cast<char>(op);
 }
-std::istream&  operator >> (std::istream &cin, Operator &op){
+std::istream&  operator >> (std::istream &cin, Expression::Operator &op){
     char c = '+';
     cin >> c;
     if(cin.fail()) 
         throw std::logic_error("Can't write operator");
     switch (c){
     case '+':
-        op = Operator::Op_Add;
+        op = Expression::Operator::Op_Add;
         return cin;
         break;
     case '-':
-        op = Operator::Op_Sub;
+        op = Expression::Operator::Op_Sub;
         return cin;
         break;
     case '*':
-        op = Operator::Op_Mul;
+        op = Expression::Operator::Op_Mul;
         return cin;
         break;
     case '/':
-        op = Operator::Op_Div;
+        op = Expression::Operator::Op_Div;
         return cin;
         break;
     default:
@@ -30,20 +30,20 @@ std::istream&  operator >> (std::istream &cin, Operator &op){
         break;
     }
 }
-bool operator== (const Operator op, const char c){
+bool operator== (const Expression::Operator op, const char c){
     return static_cast<char>(op) == c;
 }
-bool operator== (const Operator x, const Operator y){
+bool operator== (const Expression::Operator x, const Expression::Operator y){
     return static_cast<char>(x) == static_cast<char>(y);
 }
 Expression::Expression(){
     this->arg1 = Complex();
-    this->op = Operator::Op_Add;
+    this->op = Expression::Operator::Op_Add;
     this->arg2 = Complex();
 } 
-Expression::Expression(const Complex &x, const Operator &o, const Complex &y){
+Expression::Expression(const Complex &x, const Expression::Operator &op, const Complex &y){
     this->arg1 = x;
-    this->op = o;
+    this->op = op;
     this->arg2 = y;
 
 }
@@ -55,16 +55,16 @@ Expression::Expression(const Expression &exp){
 Complex Expression::Calculate() const{
     Complex comp;
     switch(op){
-        case Operator::Op_Add:
+        case Expression::Operator::Op_Add:
             comp = this->arg1 + this->arg2;
             break;
-        case Operator::Op_Sub:
+        case Expression::Operator::Op_Sub:
             comp = this->arg1 - this->arg2;
             break;
-        case  Operator::Op_Mul:
+        case  Expression::Operator::Op_Mul:
             comp = this->arg1 * this->arg2;
             break;
-        case Operator::Op_Div:
+        case Expression::Operator::Op_Div:
             comp = this->arg1 / this->arg2;
             break;
         default:
