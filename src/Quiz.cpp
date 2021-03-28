@@ -1,5 +1,6 @@
 #include "Quiz.hpp"
 #include <limits>
+#include <fstream>
 Quiz::Quiz(std::string name){
     std::ifstream file;
     file.open(name + ".dat");

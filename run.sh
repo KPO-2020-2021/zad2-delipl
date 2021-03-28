@@ -1,5 +1,8 @@
 #!/bin/bash
-mkdir build
+mkdir build/
+cp latwy.dat build/
+cp trudny.dat
 cd build
 cmake .
 make 
+./ut

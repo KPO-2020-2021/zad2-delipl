@@ -8,6 +8,8 @@ enum class Operator : char {
     Op_Mul = '*',
     Op_Div = '/'
 };
+bool operator== (const Operator, const char);
+bool operator== (const Operator, const Operator);
 std::ostream& operator<<(std::ostream&, const Operator&);
 std::istream& operator>>(std::istream&, Operator&);
 class Expression {

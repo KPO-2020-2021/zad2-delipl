@@ -5,11 +5,11 @@
 #endif
 
 #include "Quiz.hpp"
-TEST_CASE("1. Init Quiz latwe"){
-    CHECK_NOTHROW( Quiz q("../latwy"));
+TEST_CASE("1. Quiz constructor and reading file latwe"){
+    CHECK_NOTHROW( Quiz q("latwy"));
 }
-TEST_CASE("2. Quiz Size"){
-    Quiz q("../latwy");
+TEST_CASE("2. Quiz get size"){
+    Quiz q("latwy");
     CHECK(q.size()==5);
 }
 void foo(Quiz &q){
@@ -17,8 +17,8 @@ void foo(Quiz &q){
         std::cout << q[i] << std::endl;
     }
 }
-TEST_CASE("3. Print questions"){
-    Quiz q("../latwy");
+TEST_CASE("3. Quiz print questions"){
+    Quiz q("latwy");
     CHECK_NOTHROW(foo(q));
 }
 void goo(Quiz &q){
@@ -26,8 +26,7 @@ void goo(Quiz &q){
         std::cout << q[i] << " = " << q[i].Calculate() << std::endl;
     }
 }
-TEST_CASE("4. Print questions and calculate"){
-    Quiz q("../latwy");
+TEST_CASE("4. Quiz print questions and calculate"){
+    Quiz q("latwy");
     CHECK_NOTHROW(goo(q));
-    
 }

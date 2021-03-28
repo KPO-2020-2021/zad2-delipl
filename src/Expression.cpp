@@ -1,7 +1,7 @@
 #include "Expression.hpp"
 
 std::ostream&  operator << (std::ostream& cout, const Operator& op){
-    return cout << op;
+    return cout << static_cast<char>(op);
 }
 std::istream&  operator >> (std::istream &cin, Operator &op){
     char c = '+';
@@ -29,6 +29,12 @@ std::istream&  operator >> (std::istream &cin, Operator &op){
         throw std::logic_error("Can't write operator");
         break;
     }
+}
+bool operator== (const Operator op, const char c){
+    return static_cast<char>(op) == c;
+}
+bool operator== (const Operator x, const Operator y){
+    return static_cast<char>(x) == static_cast<char>(y);
 }
 Expression::Expression(){
     this->arg1 = Complex();

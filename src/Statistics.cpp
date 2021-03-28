@@ -18,7 +18,7 @@ unsigned int Statistics::operator--(int){
     return quantity;
 }
 double Statistics::Calculate() const{
-    double x = correctAnswers/quantity;
+    double x = (double)correctAnswers/(double)quantity *100;
     return x;
 }
 std::ostream& operator<<(std::ostream& cout, const Statistics& stats) {
