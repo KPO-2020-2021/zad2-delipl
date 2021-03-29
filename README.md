@@ -1,5 +1,12 @@
 # Projekt 2 - Arytmetyka liczb zespolonych
 
+## Jak odpalić program
+Aby odpalić program wystarczy sklonować repozytorium i odpalić skrypt [run.sh](run.sh).\
+Skrypt wykona:
+- budowanie plików binarnych
+- testy jednostkowe
+- główny program
+  
 ## Cel ćwiczenia
 Wykształcenie umiejętności definiowania przeciążeń operatorów arytmetycznych dwuargumentowych i jednoargumentowych dla własnych struktur danych oraz operatora porównania. Przećwiczenie podstawowych operacji na strumieniach plikowych.  Nabycie umiejętności definiowania przeciążeń operacji na strumieniach.
 
@@ -22,13 +29,15 @@ W trakcie realizacji testu program wyświetla kolejne wyrażenie i pyta użytkow
 ## Struktura repozytorium
 Repozytorium z zalążkiem do zadania ma następującą strukturę:
 
-&nbsp;&nbsp; [src](src/) - folder z plikami źródłowymi\
+
+&nbsp;&nbsp; [build](build/) - pliki binarne stworzone przez skrypt run.sh\
+&nbsp;&nbsp; [dat](dat/) - pliki z dazami danych\
 &nbsp;&nbsp; [inc](inc/)-- folder z plikami nagłówkowymi\
-&nbsp;&nbsp; [tests](tests/) - zawiera pliki źródłowe testów oraz biblioteki doctest\
-&nbsp;&nbsp; ├── bin - pliki binarne testów\
+&nbsp;&nbsp; [lib](lib/) - folder z bibliotekami
 &nbsp;&nbsp; └── doctest - pliki źródłowe dla biblioteki odpowiedzialnej za testy\
 &nbsp;&nbsp; [man](man/) - instrukcje do zadania oraz inne pomoce naukowe\
-&nbsp;&nbsp; Makefile - plik z dyrektywami do automatycznej kompilacji\
+&nbsp;&nbsp; [src](src/) - folder z plikami źródłowymi\
+&nbsp;&nbsp; [test](test/) - zawiera pliki źródłowe testów\
 &nbsp;&nbsp; .gitignore  - plik określający, które pliki mają być ignorowane przez Gita\
 
 ## Odnośniki do źródeł
