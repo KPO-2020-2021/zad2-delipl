@@ -8,5 +8,4 @@ test_arytm_zesp
 build/*
 # lol
 makefile
-workspace.code-workspace
 doc/
