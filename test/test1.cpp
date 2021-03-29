@@ -91,7 +91,7 @@ TEST_CASE("16. Complex div by Complex"){
 TEST_CASE("17. Complex div by Complex (0+0i)"){
     Complex x(2, 2);
     Complex y(0.00002, 0.000035);
-    CHECK_THROWS_AS(x/y, std::domain_error);
+    CHECK_THROWS(x/y);
 }
 TEST_CASE("18. Complex input/output operator (2-6)"){
     Complex x;
@@ -203,4 +203,60 @@ TEST_CASE("32. Complex input/output operator check throw 2+9i"){
     Complex x;
     std::istringstream in("2+9i");
     CHECK_THROWS(in >> x);
+}
+TEST_CASE("33. Complex operator +="){
+    Complex x(0.00009, 0.00009);
+    Complex y(1.00062, 1.00068);
+    Complex z(1.0007,  1.0008);
+    x += z;
+    CHECK(x == z);
+}
+TEST_CASE("34. Complex operator -="){
+    Complex x(-1.00003, 3.02685);
+    Complex y(0, 3);
+    Complex z(-1, 0.0269);
+    x -= y;
+    CHECK(x == z);
+}
+TEST_CASE("35. Complex operator double *="){
+    Complex x(0.00003, 1.00002);
+    double z = -2;
+    Complex y(0, -2);
+    x *= z;
+    CHECK(x == y);
+}
+TEST_CASE("36. Complex operator *="){
+    Complex x(0.00008, 1.00002);
+    Complex y(1, 2);
+    Complex z(-1.9999, 1.0002);
+    x *= y;
+    CHECK(x == z);
+}
+TEST_CASE("37. Complex operator double /="){
+    Complex x(2, 2);
+    double y = -2;
+    Complex z(-1, -1);
+    x /= y;
+    CHECK(x == z);
+}
+TEST_CASE("38. Complex  operator /="){
+    Complex x(2, 2);
+    Complex y(1, 2);
+    Complex z(1.2, -0.4);
+    x /= y;
+    CHECK(x == z);
+}
+TEST_CASE("39. Complex  Arg()"){
+    Complex x(2, 2);
+    double z = 0.78539816;
+    double y = x.Arg();
+    double lol = fabs(z - y);
+    CHECK(lol < MIN_DIFF);
+}
+TEST_CASE("40. Complex  Arg()"){
+    Complex x(-2, 2);
+    double z = 2.3561944901923449;
+    double y = x.Arg();
+    double lol = fabs(z - y);
+    CHECK(lol < MIN_DIFF);
 }

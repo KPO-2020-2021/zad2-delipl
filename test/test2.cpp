@@ -45,7 +45,13 @@ TEST_CASE("7. Expression Calculate function"){
     Complex w(-3.9999, 1.2001);
     CHECK(w == z);
 }
-TEST_CASE("8. Expression input/output operator (0.00006+2i)*(0.5+2i)"){
+TEST_CASE("8. Complex div by Complex (0+0i)"){
+    Complex x(2, 2);
+    Complex y(0.00002, 0.000035);
+    Expression exp(x, Expression::Operator::Op_Div, y);
+    CHECK_THROWS(exp.Calculate());
+}
+TEST_CASE("9. Expression input/output operator (0.00006+2i)*(0.5+2i)"){
     Expression x;
     std::istringstream in("(0.00006+2i)*(0.5+2i)");
     in >> x;
@@ -53,12 +59,12 @@ TEST_CASE("8. Expression input/output operator (0.00006+2i)*(0.5+2i)"){
     out << x;
     CHECK(out.str() == "(0.0001+2i)*(0.5+2i)");
 }
-TEST_CASE("9. Expression input/output operator (0.00006+2i)*"){
+TEST_CASE("10. Expression input/output operator (0.00006+2i)*"){
     Expression x;
     std::istringstream in("(0.00006+2i)*");
     CHECK_THROWS(in >> x);
 }
-TEST_CASE("10. Expression input/output operator *(0.00006+2i)"){
+TEST_CASE("11. Expression input/output operator *(0.00006+2i)"){
     Expression x;
     std::istringstream in("*(0.00006+2i)");
     CHECK_THROWS(in >> x);

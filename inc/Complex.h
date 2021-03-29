@@ -69,11 +69,23 @@ public:
      */
     Complex operator+(const Complex&) const;
 
+     /**
+     * @brief Addition two complex numbers.
+     * @return Changed Complex result of addition.
+     */
+    Complex operator+=(const Complex&);
+
     /**
      * @brief Subtraction two complex numbers.
      * @return Complex result of subtraction.
      */
     Complex operator-(const Complex&) const;
+
+     /**
+     * @brief Subtraction two complex numbers.
+     * @return Changed Complex result of subtraction.
+     */
+    Complex operator-=(const Complex&);
 
     /**
      * @brief Create the opposite number.
@@ -88,10 +100,22 @@ public:
     Complex operator*(const double&) const;
 
     /**
+     * @brief Multiplicate Complex and double numbers.
+     * @return Changed Complex result of multiplication.
+     */
+    Complex operator*=(const double&);
+
+    /**
      * @brief Multiplicate two Complex numbers.
      * @return Complex result of multiplication.
      */
     Complex operator*(const Complex&) const;
+
+    /**
+     * @brief Multiplicate two Complex numbers.
+     * @return Changed Complex result of multiplication.
+     */
+    Complex operator*=(const Complex&);
 
     /**
      * @brief Divide Complex and double numbers.
@@ -100,10 +124,22 @@ public:
     Complex operator/(const double&) const;
 
     /**
+     * @brief Divide Complex and double numbers.
+     * @return Changed Complex result of division.
+     */
+    Complex operator/=(const double&);
+
+    /**
      * @brief Divide two Complex numbers.
      * @return Complex result of division.
      */
     Complex operator/(const Complex&) const;
+
+    /**
+     * @brief Divide two Complex numbers.
+     * @return Changed Complex result of division.
+     */
+    Complex operator/=(const Complex&);
 
     /**
      * @brief Conjugate Complex number.
@@ -118,6 +154,12 @@ public:
      * @return double result of modulation.
      */
     double Module() const;
+
+    /**
+     * @brief Argumnent of Complex number
+     * @return double argument
+     */
+    double Arg() const;
 
     /**
      * @brief Compare two Complex numbers.

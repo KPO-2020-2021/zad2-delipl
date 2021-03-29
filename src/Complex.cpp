@@ -16,28 +16,52 @@ Complex::Complex(Complex const &comp): re{comp.Re()}, im{comp.Im()}    {}
 Complex Complex::operator+(const Complex &comp) const{
     return Complex(this->re + comp.Re(), this->im + comp.Im());
 }
+Complex Complex::operator+=(const Complex &comp){
+    *this = *this + comp;
+    return *this;
+}
 Complex Complex::operator-(const Complex &comp) const{
     return Complex(this->re - comp.Re(), this->im - comp.Im());
+}
+Complex Complex::operator-=(const Complex &comp){
+    *this = *this - comp;
+    return *this;
 }
 Complex Complex::operator-(){
     return Complex(-this->re , -this->im);
 }
-Complex Complex::operator*(double const &x) const{
+Complex Complex::operator*(const double &x) const{
     return Complex(x * this->re, x * this->im);
+}
+Complex Complex::operator*=(const double &x){
+    *this = (*this) * x;
+    return *this;
 }
 Complex Complex::operator*(const Complex &comp) const{  
     double  x = this->re*comp.Re() - this->im*comp.Im();
     double  y = this->re*comp.Im() + this->im*comp.Re();
     return  Complex(x,y);      
 }
+Complex Complex::operator*=(const Complex &comp){
+    *this = *this * comp;
+    return *this;
+}
 Complex Complex::operator/(const double &x) const{
     if(x == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex(this->re/x, this->im/x);
+}
+Complex Complex::operator/=(const double &x){
+    *this = (*this)/x;
+    return *this;
 }
 Complex Complex::operator/(const Complex &comp) const{
     double mod = pow(comp.Module(), 2);
     if(mod == 0) throw std::domain_error("Can't divide Complex by 0");
     return Complex( ( (*this) * Conjugate(comp) )/ mod );
+}
+Complex Complex::operator/=(const Complex &comp){
+    *this = (*this)/comp;
+    return *this;
 }
 bool Complex::operator==(const Complex &comp) const{
     return fabs(this->re - comp.Re()) < MIN_DIFF && fabs(this->im - comp.Im()) < MIN_DIFF;
@@ -53,6 +77,9 @@ Complex Complex::Conjugate(const Complex &comp) const{
 }
 double Complex::Module() const{
     return sqrt(pow(this->re, 2) + pow(this->im, 2));
+}
+double Complex::Arg() const{
+    return this->re > 0? atan2(this->re, this->im): atan2(this->re, this->im) + M_PI;
 }
 std::ostream& operator<<(std::ostream& cout, const Complex comp){
 	cout << "(";

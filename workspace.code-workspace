@@ -12,7 +12,7 @@
         "C_Cpp.clang_format_sortIncludes": true,
         "C_Cpp.default.forcedInclude": ["${workspaceFolder}/**"],
         "testMate.cpp.test.workingDirectory": "${workspaceFolder}",
-        "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/*{ut,test,Test,TEST}*"
+        "testMate.cpp.test.executables": "${workspaceFolder}/{build,Build,BUILD,out,Out,OUT}/**/*{ut,test,Test,TEST}*"
     },
     "tasks": {
         "version": "2.0.0",
@@ -31,5 +31,33 @@
                 "compileCommands": "${workspaceFolder}/build/compile_commands.json"
             }
         ],
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "clang++ - Build and debug active file",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${fileDirname}/${fileBasenameNoExtension}",
+                "args": [
+                    "latwy"
+                ],
+                "stopAtEntry": false,
+                "cwd": "${workspaceFolder}",
+                "environment": [],
+                "externalConsole": false,
+                "MIMode": "lldb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ],
+                "preLaunchTask": "C/C++: clang++ build active file",
+                "miDebuggerPath": "/usr/bin/lldb-mi"
+            }
+        ]
     },
 }
